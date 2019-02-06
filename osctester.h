@@ -23,6 +23,7 @@ class OscTester : public QMainWindow
 public:
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
+    QOSCReceiver *_oscReceiver;
 
 private slots:
     void on_sendMessage_clicked();
