@@ -2,9 +2,15 @@
 #define OSCTESTER_H
 
 #include "qoscsender.h"
+#include "qoscreceiver.h"
+#include "inputconverter.h"
+#include "ui_osctester.h"
 
 #include <QMainWindow>
 #include <vector>
+#include <QDebug>
+#include <QTime>
+#include <QCloseEvent>
 
 namespace Ui {
 class OscTester;

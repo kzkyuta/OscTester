@@ -1,6 +1,5 @@
 #include "osctester.h"
-#include "ui_osctester.h"
-#include <QDebug>
+
 
 OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
