@@ -3,9 +3,14 @@
 
 OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
-    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
+//    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
+    _oscReceiver(new QOSCReceiver(10001, this)),
     ui(new Ui::OscTester)
 {
+    connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
+//    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    _oscReceiver->start();
+
     ui->setupUi(this);
 }
 
@@ -31,6 +36,20 @@ void OscTester::on_sendMessage_clicked(){
 //    message->addInt(as[2].toInt());
 //    message->addInt(as[3].toInt());
 //    _oscSender->send(message);
+}
 
+void OscTester::onMessageReceived(QOSCMessage *msg){
+    QDateTime time = QDateTime::currentDateTime();
+    QString msgOut;
+    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
+    msgOut.append(msg->getAddress());
+    ui->receivedMsg->append(msgOut);
+}
 
+void OscTester::closeEvent(QCloseEvent *event){
+    // TODO: the correct way to finish the program.
+    QApplication::quit();
+    event->ignore();
+    exit(EXIT_SUCCESS);
+//    exit(EXIT_FAILURE);
 }

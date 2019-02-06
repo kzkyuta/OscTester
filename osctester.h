@@ -26,11 +26,12 @@ public:
 
 private slots:
     void on_sendMessage_clicked();
+    void onMessageReceived(QOSCMessage *msg);
 
 private:
     QOSCSender *_oscSender;
     Ui::OscTester *ui;
-
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // OSCTESTER_H
