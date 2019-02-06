@@ -20,10 +20,14 @@ OscTester::~OscTester()
 }
 
 void OscTester::on_sendMessage_clicked(){
-    _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
+    // inputConverter converts input text to command for osc sender
     InputConverter* inputMessage = new InputConverter(ui->oscMessage->text());
     inputMessage->setMessage();
-    _oscSender->send(inputMessage->getMessage());
+
+    if(!ui->ip->text().isNull() && !ui->port->text().isNull()) if(!ui->ip->text().isEmpty() && !ui->port->text().isEmpty()) {
+        _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
+        _oscSender->send(inputMessage->getMessage());
+    }
 
 //    QString a = ui->oscMessage->text();
 //    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
