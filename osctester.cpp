@@ -16,14 +16,22 @@ OscTester::~OscTester()
 }
 
 void OscTester::on_sendMessage_clicked(){
-    QString a = ui->oscMessage->text();
-    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
-    QOSCMessage *message = new QOSCMessage(as[0]);
+    _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
+    InputConverter* inputMessage = new InputConverter(ui->oscMessage->text());
+    inputMessage->setMessage();
+    _oscSender->send(inputMessage->getMessage());
 
-    message->addInt(as[1].toInt());  // TODO: needed to chacke if the input is int or not
-    message->addInt(as[2].toInt());
-    message->addInt(as[3].toInt());
-    _oscSender->send(message);
+//    QString a = ui->oscMessage->text();
+//    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
+//    if(as[0].left(0) == "/"){
+//        qInfo() << "OK!";
+//    }
+//    QOSCMessage *message = new QOSCMessage(as[0]);
 
-    qInfo() << as;
+//    message->addInt(as[1].toInt());  // TODO: needed to chacke if the input is int or not
+//    message->addInt(as[2].toInt());
+//    message->addInt(as[3].toInt());
+//    _oscSender->send(message);
+
+
 }
