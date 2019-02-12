@@ -7,7 +7,7 @@ OscTester::OscTester(QWidget *parent) :
 //    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
     ui(new Ui::OscTester),
     _oscReceiver(new QOSCReceiver(10001, this)),
-    ui(new Ui::OscTester)
+    _scroll(new VerticalScrollArea(nrows,ncols, this))
 {
     connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
 //    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -57,4 +57,9 @@ void OscTester::closeEvent(QCloseEvent *event){
     event->ignore();
     exit(EXIT_SUCCESS);
 //    exit(EXIT_FAILURE);
+}
+
+void OscTester::on_addContainer_clicked(){
+    qInfo() << scroll().nRows
+//    int column = scroll.
 }

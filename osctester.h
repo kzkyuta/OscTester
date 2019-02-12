@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QCloseEvent>
+#include "verticalscrollarea.h"
 
 namespace Ui {
 class OscTester;
@@ -24,18 +25,21 @@ private:
     void closeEvent(QCloseEvent *event);
 
 public:
+    int nrows = 1;
+    int ncols = 5;
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
     QOSCReceiver *_oscReceiver;
+    VerticalScrollArea scroll(int nrows, int ncols);
 
 private slots:
     void on_sendMessage_clicked();
     void onMessageReceived(QOSCMessage *msg);
 
-private:
-    QOSCSender *_oscSender;
-    Ui::OscTester *ui;
-    void closeEvent(QCloseEvent *event);
+    void on_addContainer_clicked();
+//    void slotGetNumber();
+
+
 };
 
 #endif // OSCTESTER_H

@@ -29,11 +29,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         osctester.cpp \
-    inputconverter.cpp
+    inputconverter.cpp \
+    verticalscrollarea.cpp
 
 HEADERS += \
         osctester.h \
-    inputconverter.h
+    inputconverter.h \
+    verticalscrollarea.h
 
 FORMS += \
         osctester.ui
