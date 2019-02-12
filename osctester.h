@@ -4,7 +4,6 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
-#include "ui_osctester.h"
 
 #include <QMainWindow>
 #include <vector>
@@ -19,6 +18,10 @@ class OscTester;
 class OscTester : public QMainWindow
 {
     Q_OBJECT
+private:
+    QOSCSender *_oscSender;
+    Ui::OscTester *ui;
+    void closeEvent(QCloseEvent *event);
 
 public:
     explicit OscTester(QWidget *parent = nullptr);

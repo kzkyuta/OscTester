@@ -1,16 +1,17 @@
 #include "osctester.h"
+#include "ui_osctester.h"
 
 
 OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
 //    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
+    ui(new Ui::OscTester),
     _oscReceiver(new QOSCReceiver(10001, this)),
     ui(new Ui::OscTester)
 {
     connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
 //    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
     _oscReceiver->start();
-
     ui->setupUi(this);
 }
 
