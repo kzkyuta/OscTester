@@ -27,10 +27,11 @@ private:
 public:
     int nrows = 1;
     int ncols = 5;
+    int i = 0;
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
     QOSCReceiver *_oscReceiver;
-    VerticalScrollArea scroll(int nrows, int ncols);
+    VerticalScrollArea *_scroll;
 
 private slots:
     void on_sendMessage_clicked();

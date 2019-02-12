@@ -11,8 +11,10 @@ OscTester::OscTester(QWidget *parent) :
 {
     connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
 //    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    _scroll = new VerticalScrollArea(1, 4, this);
     _oscReceiver->start();
     ui->setupUi(this);
+    ui->verticalLayout_2->addWidget(_scroll);
 }
 
 OscTester::~OscTester()
@@ -29,18 +31,6 @@ void OscTester::on_sendMessage_clicked(){
         _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
         _oscSender->send(inputMessage->getMessage());
     }
-
-//    QString a = ui->oscMessage->text();
-//    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
-//    if(as[0].left(0) == "/"){
-//        qInfo() << "OK!";
-//    }
-//    QOSCMessage *message = new QOSCMessage(as[0]);
-
-//    message->addInt(as[1].toInt());  // TODO: needed to chacke if the input is int or not
-//    message->addInt(as[2].toInt());
-//    message->addInt(as[3].toInt());
-//    _oscSender->send(message);
 }
 
 void OscTester::onMessageReceived(QOSCMessage *msg){
@@ -60,5 +50,7 @@ void OscTester::closeEvent(QCloseEvent *event){
 }
 
 void OscTester::on_addContainer_clicked(){
-//    int column = scroll.
+    QPushButton * button = new QPushButton(this);
+    button->setText("button" + QString::number(i++));
+    _scroll->addWidget(button, i, 1);
 }
