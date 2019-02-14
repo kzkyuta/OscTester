@@ -16,7 +16,9 @@ class SendContainer : public QFrame
     QLineEdit *ip;
     uint8_t id;
 public:
-    SendContainer(uint8_t, QWidget*);
+    explicit SendContainer(uint8_t, QWidget*);
+    SendContainer(const SendContainer &);
+    uint8_t getId();
 };
 
 #endif // SENDCONTAINER_H

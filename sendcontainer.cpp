@@ -9,21 +9,21 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
     setFrameShape(Panel);
 
     // make a grid instance in QFrame
-    QHBoxLayout *layout1 = new QHBoxLayout(this);
+    layout1 = new QHBoxLayout(this);
     QVBoxLayout* layout2 = new QVBoxLayout();
     QHBoxLayout* layout3 = new QHBoxLayout();
 
-    QPushButton *sendButton = new QPushButton("send");
+    sendButton = new QPushButton("send");
     sendButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
     sendButton->setMinimumSize(60,60);
 
-    QLineEdit *msg = new QLineEdit(this);
+    msg = new QLineEdit(this);
     msg->setPlaceholderText("OSC Message");
 
-    QLineEdit *port = new QLineEdit(this);
+    port = new QLineEdit(this);
     port->setPlaceholderText("port");
 
-    QLineEdit *ip = new QLineEdit(this);
+    ip = new QLineEdit(this);
     ip->setPlaceholderText("IP Adress");
 
     layout3->addWidget(port);
@@ -39,5 +39,9 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
 //    formGrid->addWidget(port, 1,0);
 //    formGrid->addWidget(ip, 1,1);
 //    formGrid->addWidget(sendButton, 0,2,2,2);
+}
+
+uint8_t SendContainer::getId(){
+    return id;
 }
 
