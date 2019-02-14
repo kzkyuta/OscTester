@@ -11,6 +11,9 @@
 
 class SendContainer : public QFrame
 {
+    Q_OBJECT // マクロ、継承する際に必要
+
+private:
     QHBoxLayout *layout1;
     QPushButton *sendButton;
     QLineEdit *msg;

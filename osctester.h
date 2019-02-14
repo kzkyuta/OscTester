@@ -40,8 +40,6 @@ private slots:
 
     void on_addContainer_clicked();
 //    void slotGetNumber();
-
-
 };
 
 #endif // OSCTESTER_H

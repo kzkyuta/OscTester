@@ -8,15 +8,17 @@
 
 class VerticalScrollArea : public QScrollArea
 {
-    QWidget *contentWidget;
-    QGridLayout *grid;
-    int nRows;
-    int nColumns;
+    Q_OBJECT
+
 public:
     explicit VerticalScrollArea(int, int, QWidget*);
     void addWidget(QWidget*, int, int);
     int columnCount() const;
 private:
+    QWidget *contentWidget;
+    QGridLayout *grid;
+    int nRows;
+    int nColumns;
     void adaptSize();
 protected:
     void resizeEvent(QResizeEvent*);
