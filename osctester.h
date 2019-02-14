@@ -24,15 +24,15 @@ private:
     QOSCSender *_oscSender;
     Ui::OscTester *ui;
     void closeEvent(QCloseEvent *event);
-
 public:
     int nrows = 1;
     int ncols = 5;
-    int i = 0;
+    uint8_t i = 0;
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
     QOSCReceiver *_oscReceiver;
     VerticalScrollArea *_scroll;
+    QVector<SendContainer*> containers;
 
 private slots:
     void on_sendMessage_clicked();
