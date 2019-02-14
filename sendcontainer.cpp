@@ -32,16 +32,22 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
     layout2->addLayout(layout3);
     layout1->addLayout(layout2);
     layout1->addWidget(sendButton);
-
-//    formGrid->setContentsMargins(0,0,0,0);
-//    formGrid->setAlignment(Qt::AlignHCenter);
-//    formGrid->addWidget(msg, 0,0,0,2);
-//    formGrid->addWidget(port, 1,0);
-//    formGrid->addWidget(ip, 1,1);
-//    formGrid->addWidget(sendButton, 0,2,2,2);
+    connect(sendButton, SIGNAL(clicked()), this, SLOT(sendOscMessage()));
 }
 
 uint8_t SendContainer::getId(){
     return id;
+}
+
+void SendContainer::sendOscMessage(){
+    InputConverter * inputMessage = new InputConverter(msg->text());
+    inputMessage->setMessage();
+    if(!ip->text().isNull() && !port->text().isNull()){
+        if(!ip->text().isEmpty() && !port->text().isEmpty()){
+            _oscSender = new QOSCSender(ip->text(), port->text().toInt(), this);
+            _oscSender->send(inputMessage->getMessage());
+            qInfo() << "sent";
+        }
+    }
 }
 
