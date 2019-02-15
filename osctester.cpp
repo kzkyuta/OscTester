@@ -1,12 +1,16 @@
 #include "osctester.h"
-#include "ui_osctester.h"
-#include <QDebug>
+
 
 OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
-    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
+//    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
+    _oscReceiver(new QOSCReceiver(10001, this)),
     ui(new Ui::OscTester)
 {
+    connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
+//    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    _oscReceiver->start();
+
     ui->setupUi(this);
 }
 
@@ -16,14 +20,36 @@ OscTester::~OscTester()
 }
 
 void OscTester::on_sendMessage_clicked(){
-    QString a = ui->oscMessage->text();
-    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
-    QOSCMessage *message = new QOSCMessage(as[0]);
+    _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
+    InputConverter* inputMessage = new InputConverter(ui->oscMessage->text());
+    inputMessage->setMessage();
+    _oscSender->send(inputMessage->getMessage());
 
-    message->addInt(as[1].toInt());  // TODO: needed to chacke if the input is int or not
-    message->addInt(as[2].toInt());
-    message->addInt(as[3].toInt());
-    _oscSender->send(message);
+//    QString a = ui->oscMessage->text();
+//    QStringList as = a.split(" ");  // TODO: make a class to manage the input data for oscSender
+//    if(as[0].left(0) == "/"){
+//        qInfo() << "OK!";
+//    }
+//    QOSCMessage *message = new QOSCMessage(as[0]);
 
-    qInfo() << as;
+//    message->addInt(as[1].toInt());  // TODO: needed to chacke if the input is int or not
+//    message->addInt(as[2].toInt());
+//    message->addInt(as[3].toInt());
+//    _oscSender->send(message);
+}
+
+void OscTester::onMessageReceived(QOSCMessage *msg){
+    QDateTime time = QDateTime::currentDateTime();
+    QString msgOut;
+    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
+    msgOut.append(msg->getAddress());
+    ui->receivedMsg->append(msgOut);
+}
+
+void OscTester::closeEvent(QCloseEvent *event){
+    // TODO: the correct way to finish the program.
+    QApplication::quit();
+    event->ignore();
+    exit(EXIT_SUCCESS);
+//    exit(EXIT_FAILURE);
 }
