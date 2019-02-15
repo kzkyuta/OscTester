@@ -30,12 +30,14 @@ SOURCES += \
         main.cpp \
         osctester.cpp \
     inputconverter.cpp \
-    verticalscrollarea.cpp
+    verticalscrollarea.cpp \
+    sendcontainer.cpp
 
 HEADERS += \
         osctester.h \
     inputconverter.h \
-    verticalscrollarea.h
+    verticalscrollarea.h \
+    sendcontainer.h
 
 FORMS += \
         osctester.ui

@@ -38,7 +38,7 @@ void OscTester::onMessageReceived(QOSCMessage *msg){
     QString msgOut;
     msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
     msgOut.append(msg->getAddress());
-    ui->receivedMsg->append(msgOut);
+//    ui->receivedMsg->append(msgOut);
 }
 
 void OscTester::closeEvent(QCloseEvent *event){
