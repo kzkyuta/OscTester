@@ -13,7 +13,7 @@ class VerticalScrollArea : public QScrollArea
 public:
     explicit VerticalScrollArea(int, int, QWidget*);
     void addWidget(QWidget*, int, int);
-    int columnCount() const;
+    int rowCount() const;
 private:
     QWidget *contentWidget;
     QVBoxLayout *parentGrid;

@@ -20,20 +20,21 @@ void VerticalScrollArea::addWidget(QWidget* w, int row, int col){
     adaptSize();
 }
 
-int VerticalScrollArea::columnCount() const{
+int VerticalScrollArea::rowCount() const{
     if(childGrid->count() == 0){
         return 0;
     }
-    return childGrid->columnCount();
+    return childGrid->rowCount();
 }
 
 void VerticalScrollArea::adaptSize(){
-    if(columnCount() >= nColumns ){
-        int w = 1.0*(width() - childGrid->horizontalSpacing()*(nColumns+1.6))/nColumns;
-        int wCorrected = w*columnCount() + childGrid->horizontalSpacing()*(columnCount()+2);
-        contentWidget->setFixedWidth(wCorrected);
+    if(rowCount() >= nRows ){
+//        int v = 1.0*(height() - childGrid->verticalSpacing()*(nRows+1.6))/nRows;
+//        int vCorrected = 100*rowCount() + childGrid->verticalSpacing()*(rowCount()+2);
+        int vCorrected = 90*rowCount();
+        contentWidget->setFixedHeight(vCorrected);
     }
-    contentWidget->setFixedHeight(viewport()->height());
+    contentWidget->setFixedWidth(viewport()->width());
 }
 
 void VerticalScrollArea::resizeEvent(QResizeEvent *event){
