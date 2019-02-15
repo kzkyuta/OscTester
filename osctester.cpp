@@ -15,6 +15,7 @@ OscTester::OscTester(QWidget *parent) :
     _oscReceiver->start();
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
+    _scroll->addWidget(empty,0,1);
 }
 
 OscTester::~OscTester()
@@ -51,9 +52,9 @@ void OscTester::closeEvent(QCloseEvent *event){
 
 void OscTester::on_addContainer_clicked(){
 //    SendContainer a(i,this);
-    SendContainer * container = new SendContainer(i, this);
+    SendContainer * container = new SendContainer(i-1, this);
     containers.append(container);
     _scroll->addWidget(container,i,1);
-    qInfo() << containers[i]->getId();
+    qInfo() << containers[i-1]->getId();
     i ++;
 }
