@@ -46,7 +46,6 @@ void SendContainer::sendOscMessage(){
         if(!ip->text().isEmpty() && !port->text().isEmpty()){
             _oscSender = new QOSCSender(ip->text(), port->text().toInt(), this);
             _oscSender->send(inputMessage->getMessage());
-            qInfo() << "sent";
         }
     }
 }
