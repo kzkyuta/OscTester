@@ -5,6 +5,7 @@
 #include <QResizeEvent>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QDebug>
 
 class VerticalScrollArea : public QScrollArea
 {
