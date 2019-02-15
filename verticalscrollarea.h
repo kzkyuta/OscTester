@@ -16,7 +16,10 @@ public:
     int columnCount() const;
 private:
     QWidget *contentWidget;
-    QGridLayout *grid;
+    QVBoxLayout *parentGrid;
+    QGridLayout *childGrid;
+    QWidget * empty;
+
     int nRows;
     int nColumns;
     void adaptSize();

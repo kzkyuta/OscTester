@@ -15,7 +15,6 @@ OscTester::OscTester(QWidget *parent) :
     _oscReceiver->start();
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
-    _scroll->addWidget(empty,0,1);
 }
 
 OscTester::~OscTester()
