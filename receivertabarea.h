@@ -1,11 +1,13 @@
 #ifndef RECEIVERTABAREA_H
 #define RECEIVERTABAREA_H
+
 #include <QWidget>
 #include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
 #include <QLayout>
-
+#include <QTime>
+#include "qoscreceiver.h"
 
 class ReceiverTabArea : public QWidget
 {
@@ -13,11 +15,12 @@ class ReceiverTabArea : public QWidget
 
 public:
     explicit ReceiverTabArea(int, QWidget* = nullptr);
-//    ~ReceiverTabArea();
     static uint8_t tabNum;
     uint8_t getTabNum();
+    QOSCReceiver *oscReceiver;
 private slots:
 //    void filter();
+    void onMessageReceived(QOSCMessage *msg);
 
 private:
     int port;

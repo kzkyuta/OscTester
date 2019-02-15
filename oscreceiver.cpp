@@ -24,7 +24,7 @@ void OscReceiver::on_pushButton_clicked(){
     if(ReceiverTabArea::tabNum == 0){
 //        tabArea = new ReceiverTabArea(portNum.toInt(), this);
         tabArea = new QTabWidget(this);
-        ui->verticalLayout_2->addWidget(tabArea);
+        ui->verticalLayout->addWidget(tabArea);
     }
     tabCotents.append(new ReceiverTabArea(portNum,this));
     tabArea->addTab(tabCotents.back(), portString);

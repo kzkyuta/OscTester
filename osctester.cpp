@@ -33,13 +33,13 @@ void OscTester::on_sendMessage_clicked(){
     }
 }
 
-void OscTester::onMessageReceived(QOSCMessage *msg){
-    QDateTime time = QDateTime::currentDateTime();
-    QString msgOut;
-    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
-    msgOut.append(msg->getAddress());
-//    ui->receivedMsg->append(msgOut);
-}
+//void OscTester::onMessageReceived(QOSCMessage *msg){
+//    QDateTime time = QDateTime::currentDateTime();
+//    QString msgOut;
+//    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
+//    msgOut.append(msg->getAddress());
+////    ui->receivedMsg->append(msgOut);
+//}
 
 void OscTester::closeEvent(QCloseEvent *event){
     // TODO: the correct way to finish the program.
