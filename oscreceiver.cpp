@@ -16,13 +16,16 @@ OscReceiver::~OscReceiver()
 }
 
 void OscReceiver::on_pushButton_clicked(){
-    QString portNum = ui->lineEdit->text();
+    QString portString = ui->lineEdit->text();
+    bool isSuccess;
+    int portNum = portString.toInt(&isSuccess, 10);
+    if(!isSuccess) return;
     ui->lineEdit->clear();
     if(ReceiverTabArea::tabNum == 0){
 //        tabArea = new ReceiverTabArea(portNum.toInt(), this);
         tabArea = new QTabWidget(this);
         ui->verticalLayout_2->addWidget(tabArea);
     }
-    tabCotents.append(new ReceiverTabArea(portNum.toInt(),this));
-    tabArea->addTab(tabCotents.back(), portNum);
+    tabCotents.append(new ReceiverTabArea(portNum,this));
+    tabArea->addTab(tabCotents.back(), portString);
 }
