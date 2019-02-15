@@ -50,9 +50,7 @@ void OscTester::closeEvent(QCloseEvent *event){
 }
 
 void OscTester::on_addContainer_clicked(){
-//    SendContainer a(i,this);
-    SendContainer * container = new SendContainer(i-1, this);
-    containers.append(container);
-    _scroll->addWidget(container,i-1,1);
+    containers.append(new SendContainer(i-1, this));
+    _scroll->addWidget(containers.back(),i-1,1);
     i ++;
 }

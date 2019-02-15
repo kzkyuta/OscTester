@@ -12,6 +12,7 @@
 #include <QCloseEvent>
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
+#include "oscreceiver.h"
 
 namespace Ui {
 class OscTester;

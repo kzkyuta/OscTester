@@ -31,16 +31,21 @@ SOURCES += \
         osctester.cpp \
     inputconverter.cpp \
     verticalscrollarea.cpp \
-    sendcontainer.cpp
+    sendcontainer.cpp \
+    oscreceiver.cpp \
+    receivertabarea.cpp
 
 HEADERS += \
         osctester.h \
     inputconverter.h \
     verticalscrollarea.h \
-    sendcontainer.h
+    sendcontainer.h \
+    oscreceiver.h \
+    receivertabarea.h
 
 FORMS += \
-        osctester.ui
+        osctester.ui \
+    oscreceiver.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
