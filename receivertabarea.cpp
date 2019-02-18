@@ -28,7 +28,13 @@ uint8_t ReceiverTabArea::getTabNum(){
 void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
     QDateTime time = QDateTime::currentDateTime();
     QString msgOut;
-    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
-    msgOut.append(msg->getAddress());
+    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " - ");
+    msgOut.append(msg->getAddress() + ":");
+    qInfo() << "a";
+
+    for(int i = 0; i < msg->getSize(); i++){
+        msgOut.append(" " + msg->getReceivedData(i));
+        qInfo() << msg->getReceivedData(i);
+    }
     receivedMsg->append(msgOut);
 }

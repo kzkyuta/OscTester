@@ -51,6 +51,7 @@ public:
     float getArgumentAsFloat(int index);
     QByteArray getArgumentAsBlob(int index);
     int getArgumentAsTime(int index);
+    QString getReceivedData(int index); // return all argument as String
 
 
 private:

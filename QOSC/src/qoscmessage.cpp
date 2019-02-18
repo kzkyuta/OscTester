@@ -209,3 +209,14 @@ int QOSCMessage::getArgumentAsTime(int index)
 
 }
 
+QString QOSCMessage::getReceivedData(int index){
+    if(isIntArgument(index)) return QString::number(((QOSCArgument_int*) _arguments[index])->_value);
+    if(isStringArgument(index)) return ((QOSCArgument_string*) _arguments[index])->_value;
+    if(isBoolArgument(index)){
+        if(((QOSCArgument_bool*) _arguments[index])->_value) return "True";
+        else return "false";
+    }
+    if(isFloatArgument(index)) return QString::number(((QOSCArgument_float*) _arguments[index])->_value);
+    if(isBlobArgument(index)) return "Blob Data";
+    if(isTimeArgument(index)) return QString::number(((QOSCArgument_time*) _arguments[index])->_value);
+}
