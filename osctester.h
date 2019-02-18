@@ -37,7 +37,6 @@ public:
 private slots:
     void on_sendMessage_clicked();
     void on_addContainer_clicked();
-//    void slotGetNumber();
 };
 
 #endif // OSCTESTER_H

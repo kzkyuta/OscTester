@@ -7,7 +7,6 @@ InputConverter::InputConverter(QString m_string)
 }
 
 InputConverter::~InputConverter(){
-
 }
 
 void InputConverter::setMessage(){

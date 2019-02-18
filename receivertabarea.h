@@ -15,6 +15,7 @@ class ReceiverTabArea : public QWidget
 
 public:
     explicit ReceiverTabArea(unsigned int, QWidget* = nullptr);
+    ~ReceiverTabArea();
     static uint8_t tabNum;
     uint8_t getTabNum();
     QOSCReceiver *oscReceiver;

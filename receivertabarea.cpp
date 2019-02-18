@@ -19,6 +19,8 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     parentLayout->addWidget(receivedMsg);
 }
 
+ReceiverTabArea::~ReceiverTabArea(){}
+
 uint8_t ReceiverTabArea::getTabNum(){
     return tabNum;
 }
