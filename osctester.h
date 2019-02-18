@@ -36,8 +36,6 @@ public:
 
 private slots:
     void on_sendMessage_clicked();
-//    void onMessageReceived(QOSCMessage *msg);
-
     void on_addContainer_clicked();
 //    void slotGetNumber();
 };

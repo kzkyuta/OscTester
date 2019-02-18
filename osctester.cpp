@@ -1,18 +1,11 @@
 #include "osctester.h"
 #include "ui_osctester.h"
 
-
 OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
-//    _oscSender(new QOSCSender("127.0.0.1", 10002, this)),
-    ui(new Ui::OscTester),
-    _oscReceiver(new QOSCReceiver(10001, this))
-//    _scroll(new VerticalScrollArea(nrows,ncols, this))
+    ui(new Ui::OscTester)
 {
-    connect(_oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
-//    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
     _scroll = new VerticalScrollArea(3, 1, this);
-    _oscReceiver->start();
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
 }
@@ -32,14 +25,6 @@ void OscTester::on_sendMessage_clicked(){
         _oscSender->send(inputMessage->getMessage());
     }
 }
-
-//void OscTester::onMessageReceived(QOSCMessage *msg){
-//    QDateTime time = QDateTime::currentDateTime();
-//    QString msgOut;
-//    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");
-//    msgOut.append(msg->getAddress());
-////    ui->receivedMsg->append(msgOut);
-//}
 
 void OscTester::closeEvent(QCloseEvent *event){
     // TODO: the correct way to finish the program.
