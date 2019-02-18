@@ -13,6 +13,9 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     parentLayout = new QVBoxLayout(this);
     filter = new QLineEdit();
     receivedMsg = new QTextEdit();
+    receivedMsg->setFontFamily("Arial Narrow");
+    receivedMsg->setFontPointSize(13);
+    receivedMsg->setFontWeight(1);
 
     filter->setPlaceholderText("Insert filter sentence.");
     parentLayout->addWidget(filter);
