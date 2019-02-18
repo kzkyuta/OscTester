@@ -32,7 +32,7 @@ void OscReceiver::on_pushButton_clicked(){
         return;
     }
 
-    if(tabArea){
+    if(tabArea == nullptr){
         tabArea = new QTabWidget(this);
         ui->verticalLayout->addWidget(tabArea);
     }

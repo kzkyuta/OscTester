@@ -16,7 +16,7 @@ class OscReceiver : public QMainWindow
 public:
     explicit OscReceiver(QWidget *parent = nullptr);
     ~OscReceiver();
-    QTabWidget *tabArea;
+    QTabWidget *tabArea = nullptr;
     QVector<ReceiverTabArea*> tabCotents;
 
 private slots:
