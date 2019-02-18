@@ -1,10 +1,13 @@
 #include "receivertabarea.h"
 
-ReceiverTabArea::ReceiverTabArea(int portNum, QWidget* parent)
-    :QWidget(parent), port(portNum), oscReceiver(new QOSCReceiver(port, this))
+ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
+    :QWidget(parent),
+      oscReceiver(new QOSCReceiver(portNum, this)),
+      port(portNum)
 {
     tabNum++;
-    connect(oscReceiver, SIGNAL(messageReveived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
+    oscReceiver->
+    connect(oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
     oscReceiver->start();
 
     parentLayout = new QVBoxLayout(this);
@@ -20,7 +23,7 @@ uint8_t ReceiverTabArea::getTabNum(){
     return tabNum;
 }
 
-void ReceiverTabArea::onMessageReceived(QOSCMessage *msg){
+void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
     QDateTime time = QDateTime::currentDateTime();
     QString msgOut;
     msgOut.append(time.toString("MM/dd/hh:mm:ss") + " ");

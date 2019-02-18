@@ -14,16 +14,16 @@ class ReceiverTabArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit ReceiverTabArea(int, QWidget* = nullptr);
+    explicit ReceiverTabArea(unsigned int, QWidget* = nullptr);
     static uint8_t tabNum;
     uint8_t getTabNum();
     QOSCReceiver *oscReceiver;
-private slots:
+public slots:
 //    void filter();
-    void onMessageReceived(QOSCMessage *msg);
+    void onMessageReceived(QOSCMessage* msg);
 
 private:
-    int port;
+    unsigned int port;
     QLineEdit *filter;
     QTextEdit *receivedMsg;
     QVBoxLayout *parentLayout;
