@@ -13,7 +13,7 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     parentLayout = new QVBoxLayout(this);
     filter = new QLineEdit();
     receivedMsg = new QTextEdit();
-    receivedMsg->setFontFamily("Arial Narrow");
+    receivedMsg->setFontFamily("Arial");
     receivedMsg->setFontPointSize(13);
     receivedMsg->setFontWeight(1);
 

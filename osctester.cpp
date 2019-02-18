@@ -15,17 +15,6 @@ OscTester::~OscTester()
     delete ui;
 }
 
-void OscTester::on_sendMessage_clicked(){
-    // inputConverter converts input text to command for osc sender
-    InputConverter* inputMessage = new InputConverter(ui->oscMessage->text());
-    inputMessage->setMessage();
-
-    if(!ui->ip->text().isNull() && !ui->port->text().isNull()) if(!ui->ip->text().isEmpty() && !ui->port->text().isEmpty()) {
-        _oscSender = new QOSCSender(ui->ip->text(), ui->port->text().toInt(), this);
-        _oscSender->send(inputMessage->getMessage());
-    }
-}
-
 void OscTester::closeEvent(QCloseEvent *event){
     // TODO: the correct way to finish the program.
     QApplication::quit();

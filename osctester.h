@@ -35,7 +35,6 @@ public:
     QVector<SendContainer*> containers;
 
 private slots:
-    void on_sendMessage_clicked();
     void on_addContainer_clicked();
 };
 
