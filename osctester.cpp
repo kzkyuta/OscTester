@@ -27,12 +27,34 @@ void OscTester::closeEvent(QCloseEvent *event){
 void OscTester::on_addContainer_clicked(){
     containers.append(new SendContainer(this));
     _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
-    qInfo()<< SendContainer::containerNum;
 }
 
-void OscTester::on_importJson_clicked()
-{
+void OscTester::on_importJson_clicked(){
+    QString fileName = QFileDialog::getOpenFileName(
+                this,
+                tr("Open Json File"),
+                "C://",
+                "All files (*.*);; Json File (*.json)");
+    if(fileName=="")
+    {   //CANCEL
+        return;
+    }
 
+    QFile openFile(fileName);
+    openFile.open(QIODevice::ReadOnly);
+    QByteArray data = openFile.readAll();
+    QJsonDocument jsonDoc(QJsonDocument::fromJson(data));
+    QJsonObject jsonObj(jsonDoc.object());
+    QJsonArray jsonArr = jsonObj.value("containerList").toArray();
+    for(int i = 0; i < jsonArr.size(); i++){
+        containers.append(new SendContainer(this));
+        _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+        QJsonObject temp = jsonArr[i].toObject();
+        containers[SendContainer::containerNum - 1]->setMsg(temp["address"].toString());
+        containers[SendContainer::containerNum - 1]->setPort(temp["port"].toString());
+        containers[SendContainer::containerNum - 1]->setIp(temp["ip"].toString());
+    }
+    qInfo() << SendContainer::containerNum;
 }
 
 void OscTester::on_exportJson_clicked(){
@@ -54,7 +76,7 @@ void OscTester::on_exportJson_clicked(){
         jsonObjChild["ip"] = containers[i]->getIp();
         jsonArr.append(jsonObjChild);
     }
-    jsonObjParent["ontainerList"] = jsonArr;
+    jsonObjParent["containerList"] = jsonArr;
     QJsonDocument jsonDoc(jsonObjParent);
 
     // get QByteArray data from jsonDoc
