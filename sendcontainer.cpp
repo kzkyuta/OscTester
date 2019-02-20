@@ -42,12 +42,13 @@ uint8_t SendContainer::getId(){
 }
 
 void SendContainer::sendOscMessage(){
-    InputConverter * inputMessage = new InputConverter(msg->text());
-    inputMessage->setMessage();
+    InputConverter inputMessage = InputConverter(msg->text());
+    inputMessage.setMessage();
     if(!ip->text().isNull() && !port->text().isNull()){
         if(!ip->text().isEmpty() && !port->text().isEmpty()){
             _oscSender = new QOSCSender(ip->text(), port->text().toInt(), this);
-            _oscSender->send(inputMessage->getMessage());
+            _oscSender->send(inputMessage.getMessage());
+            delete _oscSender;
         }
     }
 }
