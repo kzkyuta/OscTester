@@ -3,23 +3,22 @@
 ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     :QWidget(parent),
       oscReceiver(new QOSCReceiver(portNum, this)),
+      parentLayout(new QVBoxLayout(this)),
+      filterInput(new QLineEdit()),
+      receivedMsgOutput(new QPlainTextEdit()),
       port(portNum)
 {
     tabNum++;
-    oscReceiver->
-    connect(oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
+    oscReceiver->connect(oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
     oscReceiver->start();
 
-    parentLayout = new QVBoxLayout(this);
-    filter = new QLineEdit();
-    receivedMsg = new QTextEdit();
-    receivedMsg->setFontFamily("Arial");
-    receivedMsg->setFontPointSize(13);
-    receivedMsg->setFontWeight(1);
+    receivedMsgOutput->setReadOnly(false);
 
-    filter->setPlaceholderText("Insert filter sentence.");
-    parentLayout->addWidget(filter);
-    parentLayout->addWidget(receivedMsg);
+    filterInput->setPlaceholderText("Insert filter sentence.");
+    parentLayout->addWidget(filterInput);
+    parentLayout->addWidget(receivedMsgOutput);
+    connect(filterInput, SIGNAL(textChanged(const QString &)), this, SLOT(onChangedText()));
+
 }
 
 ReceiverTabArea::~ReceiverTabArea(){}
@@ -33,11 +32,36 @@ void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
     QString msgOut;
     msgOut.append(time.toString("MM/dd/hh:mm:ss") + " - ");
     msgOut.append(msg->getAddress() + ":");
-    qInfo() << "a";
 
     for(int i = 0; i < msg->getSize(); i++){
         msgOut.append(" " + msg->getReceivedData(i));
-        qInfo() << msg->getReceivedData(i);
     }
-    receivedMsg->append(msgOut);
+    receivedMsgs.push_back(msgOut);
+    this->showReceivedMsg();
+}
+
+void ReceiverTabArea::onChangedText(){
+    showReceivedMsg();
+}
+
+bool ReceiverTabArea::msgFilter(int i){
+    QString searchString = filterInput->text();
+    if(searchString.isEmpty()) return true;
+    if(receivedMsgs[i].toStdString().find(searchString.toStdString()) == std::string::npos)
+        return false;
+    else
+        return true;
+}
+
+void ReceiverTabArea::showReceivedMsg(){
+    receivedMsgOutput->clear();
+    for(int i =0; i < receivedMsgs.size(); i++){
+        if(!this->msgFilter(i)){
+            QString grayText = QString("<FONT COLOR=gray>%1</FONT>").arg(receivedMsgs[i]);
+            receivedMsgOutput->appendHtml(grayText);
+        }else{
+            QString whiteText = QString("<FONT COLOR=white>%1</FONT>").arg(receivedMsgs[i]);
+            receivedMsgOutput->appendHtml(whiteText);
+        }
+    }
 }
