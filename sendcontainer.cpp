@@ -42,10 +42,6 @@ SendContainer::~SendContainer(){}
 // Number of Containers
 uint8_t SendContainer::containerNum = 0;
 
-uint8_t SendContainer::getId(){
-    return id;
-}
-
 void SendContainer::sendOscMessage(){
     InputConverter inputMessage = InputConverter(msg->text());
     inputMessage.setMessage();

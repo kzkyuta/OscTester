@@ -25,7 +25,6 @@ public:
     ~SendContainer();
     SendContainer(const SendContainer &);
 
-    uint8_t getId();
     QString getMsg();
     QString getPort();
     QString getIp();

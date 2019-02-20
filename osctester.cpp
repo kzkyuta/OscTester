@@ -30,6 +30,7 @@ void OscTester::on_addContainer_clicked(){
 }
 
 void OscTester::on_importJson_clicked(){
+    // Open file Dialog and get file name
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Open Json File"),
@@ -40,12 +41,18 @@ void OscTester::on_importJson_clicked(){
         return;
     }
 
+    // open file and set ReadOnly mode
     QFile openFile(fileName);
     openFile.open(QIODevice::ReadOnly);
+
+    // input all data to QByteArray data
     QByteArray data = openFile.readAll();
+    // read as json
     QJsonDocument jsonDoc(QJsonDocument::fromJson(data));
     QJsonObject jsonObj(jsonDoc.object());
+    // get Array data
     QJsonArray jsonArr = jsonObj.value("containerList").toArray();
+    // set all values on sendcontainer class.
     for(int i = 0; i < jsonArr.size(); i++){
         containers.append(new SendContainer(this));
         _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
@@ -54,7 +61,6 @@ void OscTester::on_importJson_clicked(){
         containers[SendContainer::containerNum - 1]->setPort(temp["port"].toString());
         containers[SendContainer::containerNum - 1]->setIp(temp["ip"].toString());
     }
-    qInfo() << SendContainer::containerNum;
 }
 
 void OscTester::on_exportJson_clicked(){
