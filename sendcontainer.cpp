@@ -52,3 +52,27 @@ void SendContainer::sendOscMessage(){
         }
     }
 }
+
+QString SendContainer::getMsg(){
+    return msg->text();
+}
+
+QString SendContainer::getPort(){
+    return port->text();
+}
+
+QString SendContainer::getIp(){
+    return ip->text();
+}
+
+void SendContainer::setMsg(QString message){
+    msg->setText(message);
+}
+
+void SendContainer::setPort(QString portNum){
+    port->setText(portNum);
+}
+
+void SendContainer::setIp(QString ipNum){
+    ip->setText(ipNum);
+}

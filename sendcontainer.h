@@ -25,7 +25,16 @@ public:
     explicit SendContainer(uint8_t, QWidget*);
     ~SendContainer();
     SendContainer(const SendContainer &);
+
     uint8_t getId();
+    QString getMsg();
+    QString getPort();
+    QString getIp();
+
+    void setMsg(QString);
+    void setPort(QString);
+    void setIp(QString);
+
 private slots:
     void sendOscMessage();
 };
