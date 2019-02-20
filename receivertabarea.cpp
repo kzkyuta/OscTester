@@ -12,7 +12,7 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     oscReceiver->connect(oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
     oscReceiver->start();
 
-    receivedMsgOutput->setReadOnly(false);
+    receivedMsgOutput->setReadOnly(true);
 
     filterInput->setPlaceholderText("Insert filter sentence.");
     parentLayout->addWidget(filterInput);
