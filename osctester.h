@@ -33,7 +33,6 @@ private:
 public:
     int nrows = 1;
     int ncols = 5;
-    uint8_t i = 1;
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
     QOSCReceiver *_oscReceiver;

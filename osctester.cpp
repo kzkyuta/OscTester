@@ -5,6 +5,7 @@ OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OscTester)
 {
+//    SendContainer::containerNum = 0;
     _scroll = new VerticalScrollArea(3, 1, this);
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
@@ -24,9 +25,9 @@ void OscTester::closeEvent(QCloseEvent *event){
 }
 
 void OscTester::on_addContainer_clicked(){
-    containers.append(new SendContainer(i-1, this));
-    _scroll->addWidget(containers.back(),i-1,1);
-    i ++;
+    containers.append(new SendContainer(this));
+    _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+    qInfo()<< SendContainer::containerNum;
 }
 
 void OscTester::on_importJson_clicked()

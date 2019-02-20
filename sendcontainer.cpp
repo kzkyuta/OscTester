@@ -1,12 +1,14 @@
 #include "sendcontainer.h"
 
-SendContainer::SendContainer(uint8_t id, QWidget *parent)
-    :QFrame(parent), id(id)
+SendContainer::SendContainer(QWidget *parent)
+    :QFrame(parent)
 {
     // set frame default size
     setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
     setMinimumSize(0,65);
     setFrameShape(Panel);
+
+    containerNum ++;
 
     // make a grid instance in QFrame
     layout1 = new QHBoxLayout(this);
@@ -36,6 +38,9 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
 }
 
 SendContainer::~SendContainer(){}
+
+// Number of Containers
+uint8_t SendContainer::containerNum = 0;
 
 uint8_t SendContainer::getId(){
     return id;

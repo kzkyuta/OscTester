@@ -19,10 +19,9 @@ private:
     QLineEdit *msg;
     QLineEdit *port;
     QLineEdit *ip;
-    uint8_t id;
     QOSCSender *_oscSender;
 public:
-    explicit SendContainer(uint8_t, QWidget*);
+    explicit SendContainer(QWidget*);
     ~SendContainer();
     SendContainer(const SendContainer &);
 
@@ -34,6 +33,7 @@ public:
     void setMsg(QString);
     void setPort(QString);
     void setIp(QString);
+    static uint8_t containerNum;
 
 private slots:
     void sendOscMessage();
