@@ -13,6 +13,7 @@ class VerticalScrollArea : public QScrollArea
 
 public:
     explicit VerticalScrollArea(int, int, QWidget*);
+    ~VerticalScrollArea();
     void addWidget(QWidget*, int, int);
     int rowCount() const;
 private:

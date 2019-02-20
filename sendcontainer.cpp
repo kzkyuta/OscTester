@@ -35,6 +35,8 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
     connect(sendButton, SIGNAL(clicked()), this, SLOT(sendOscMessage()));
 }
 
+SendContainer::~SendContainer(){}
+
 uint8_t SendContainer::getId(){
     return id;
 }
@@ -49,4 +51,3 @@ void SendContainer::sendOscMessage(){
         }
     }
 }
-

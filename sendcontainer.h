@@ -23,6 +23,7 @@ private:
     QOSCSender *_oscSender;
 public:
     explicit SendContainer(uint8_t, QWidget*);
+    ~SendContainer();
     SendContainer(const SendContainer &);
     uint8_t getId();
 private slots:
