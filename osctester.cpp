@@ -28,3 +28,40 @@ void OscTester::on_addContainer_clicked(){
     _scroll->addWidget(containers.back(),i-1,1);
     i ++;
 }
+
+void OscTester::on_importJson_clicked()
+{
+
+}
+
+void OscTester::on_exportJson_clicked(){
+    // Generate File Save Dialog
+    QString fileName = QFileDialog::getSaveFileName(this,
+                        tr("Save Json"), "",
+                        tr("Json (*.json);;All Files (*)"));
+    if(fileName=="")
+    {   //CANCEL
+        return;
+    }
+
+    // set Json File Data
+    QJsonObject jsonObjParent, jsonObjChild;
+    QJsonArray jsonArr;
+    for(int i =0; i < containers.size(); i++){
+        jsonObjChild["address"] = containers[i]->getMsg();
+        jsonObjChild["port"] = containers[i]->getPort();
+        jsonObjChild["ip"] = containers[i]->getIp();
+        jsonArr.append(jsonObjChild);
+    }
+    jsonObjParent["ontainerList"] = jsonArr;
+    QJsonDocument jsonDoc(jsonObjParent);
+
+    // get QByteArray data from jsonDoc
+    QByteArray data(jsonDoc.toJson());
+
+    // Write Data on file which user named
+    QFile saveFile(fileName);
+    saveFile.open(QIODevice::WriteOnly);
+    saveFile.write(data);
+    saveFile.close();
+}
