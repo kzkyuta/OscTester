@@ -29,7 +29,7 @@ void OscTester::on_addContainer_clicked(){
     _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
 }
 
-void OscTester::on_importJson_clicked(){
+void OscTester::on_importJson_clicked(){  // TODO: file checker
     // Open file Dialog and get file name
     QString fileName = QFileDialog::getOpenFileName(
                 this,
