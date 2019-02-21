@@ -32,10 +32,14 @@ public:
     void setMsg(QString);
     void setPort(QString);
     void setIp(QString);
+
     static uint8_t containerNum;
+    void sendOscMessage();
 
 private slots:
-    void sendOscMessage();
+    void on_sendButton_clicked();
+    void on_sendButton_pressed();
+    void on_sendButton_released();
 };
 
 #endif // SENDCONTAINER_H
