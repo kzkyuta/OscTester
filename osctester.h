@@ -16,6 +16,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QKeyEvent>
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
 
@@ -43,6 +44,10 @@ private slots:
     void on_addContainer_clicked();
     void on_importJson_clicked();
     void on_exportJson_clicked();
+
+protected:
+    void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent*);
 };
 
 #endif // OSCTESTER_H

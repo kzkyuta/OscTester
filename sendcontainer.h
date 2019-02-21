@@ -37,10 +37,12 @@ public:
 
     static uint8_t containerNum;
     void sendOscMessage();
+    void changeContainerColor(bool);
 
 private slots:
     void on_sendButton_clicked();
     void on_sendButton_pressed();
+    void on_sendButton_released();
     void on_changed_text();
 };
 

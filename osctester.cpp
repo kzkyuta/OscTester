@@ -95,3 +95,20 @@ void OscTester::on_exportJson_clicked(){
     saveFile.write(data);
     saveFile.close();
 }
+
+void OscTester::keyPressEvent(QKeyEvent* event){
+    for(int i = 0; i < SendContainer::containerNum; i ++){
+        if(event->key() == containers[i]->commandInput->text()[0].unicode()){
+            containers[i]->changeContainerColor(true);
+            containers[i]->sendOscMessage();
+        }
+    }
+}
+
+void OscTester::keyReleaseEvent(QKeyEvent* event){
+    for(int i = 0; i < SendContainer::containerNum; i ++){
+        if(event->key() == containers[i]->commandInput->text()[0].unicode()){
+            containers[i]->changeContainerColor(false);
+        }
+    }
+}

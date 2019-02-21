@@ -64,10 +64,12 @@ void SendContainer::on_sendButton_clicked(){
 
 void SendContainer::on_sendButton_pressed(){
     this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
+    changeContainerColor(true);
 }
 
 void SendContainer::on_sendButton_released(){
     this->setStyleSheet("");
+    changeContainerColor(false);
 }
 
 void SendContainer::sendOscMessage(){
@@ -108,4 +110,9 @@ void SendContainer::setIp(QString ipNum){
 
 void SendContainer::on_changed_text(){
     commandInput->setText(commandInput->text().toUpper());
+}
+
+void SendContainer::changeContainerColor(bool state){
+    if(state) this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
+    else this->setStyleSheet("");
 }
