@@ -20,7 +20,9 @@ private:
     QLineEdit *port;
     QLineEdit *ip;
     QOSCSender *_oscSender;
+
 public:
+    QLineEdit *commandInput;
     explicit SendContainer(QWidget*);
     ~SendContainer();
     SendContainer(const SendContainer &);
@@ -39,7 +41,7 @@ public:
 private slots:
     void on_sendButton_clicked();
     void on_sendButton_pressed();
-    void on_sendButton_released();
+    void on_changed_text();
 };
 
 #endif // SENDCONTAINER_H

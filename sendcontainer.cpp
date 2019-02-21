@@ -36,11 +36,14 @@ SendContainer::SendContainer(QWidget *parent)
     layout3->addWidget(ip);
     layout2->addWidget(msg);
     layout2->addLayout(layout3);
+    layout1->addWidget(commandInput);
     layout1->addLayout(layout2);
     layout1->addWidget(sendButton);
+
     connect(sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
     connect(sendButton, SIGNAL(released()), this, SLOT(on_sendButton_released()));
+    connect(commandInput, SIGNAL(textChanged(const QString &)), this, SLOT(on_changed_text()));
 }
 
 SendContainer::~SendContainer(){}
@@ -94,4 +97,8 @@ void SendContainer::setPort(QString portNum){
 
 void SendContainer::setIp(QString ipNum){
     ip->setText(ipNum);
+}
+
+void SendContainer::on_changed_text(){
+    commandInput->setText(commandInput->text().toUpper());
 }
