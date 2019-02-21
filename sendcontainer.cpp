@@ -1,12 +1,14 @@
 #include "sendcontainer.h"
 
-SendContainer::SendContainer(uint8_t id, QWidget *parent)
-    :QFrame(parent), id(id)
+SendContainer::SendContainer(QWidget *parent)
+    :QFrame(parent)
 {
     // set frame default size
     setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
     setMinimumSize(0,65);
     setFrameShape(Panel);
+
+    containerNum ++;
 
     // make a grid instance in QFrame
     layout1 = new QHBoxLayout(this);
@@ -37,17 +39,41 @@ SendContainer::SendContainer(uint8_t id, QWidget *parent)
 
 SendContainer::~SendContainer(){}
 
-uint8_t SendContainer::getId(){
-    return id;
-}
+// Number of Containers
+uint8_t SendContainer::containerNum = 0;
 
 void SendContainer::sendOscMessage(){
-    InputConverter * inputMessage = new InputConverter(msg->text());
-    inputMessage->setMessage();
+    InputConverter inputMessage = InputConverter(msg->text());
+    inputMessage.setMessage();
     if(!ip->text().isNull() && !port->text().isNull()){
         if(!ip->text().isEmpty() && !port->text().isEmpty()){
             _oscSender = new QOSCSender(ip->text(), port->text().toInt(), this);
-            _oscSender->send(inputMessage->getMessage());
+            _oscSender->send(inputMessage.getMessage());
+            delete _oscSender;
         }
     }
+}
+
+QString SendContainer::getMsg(){
+    return msg->text();
+}
+
+QString SendContainer::getPort(){
+    return port->text();
+}
+
+QString SendContainer::getIp(){
+    return ip->text();
+}
+
+void SendContainer::setMsg(QString message){
+    msg->setText(message);
+}
+
+void SendContainer::setPort(QString portNum){
+    port->setText(portNum);
+}
+
+void SendContainer::setIp(QString ipNum){
+    ip->setText(ipNum);
 }

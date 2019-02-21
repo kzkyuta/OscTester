@@ -10,6 +10,12 @@
 #include <QDebug>
 #include <QTime>
 #include <QCloseEvent>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
 
@@ -27,7 +33,6 @@ private:
 public:
     int nrows = 1;
     int ncols = 5;
-    uint8_t i = 1;
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
     QOSCReceiver *_oscReceiver;
@@ -36,6 +41,8 @@ public:
 
 private slots:
     void on_addContainer_clicked();
+    void on_importJson_clicked();
+    void on_exportJson_clicked();
 };
 
 #endif // OSCTESTER_H
