@@ -4,13 +4,13 @@ SendContainer::SendContainer(QWidget *parent)
     :QFrame(parent)
 {
     // set frame default size
-    setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-    setMinimumSize(0,65);
-    setFrameShape(Panel);
+    this->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+    this->setMinimumSize(0,65);
+    this->setFrameShape(Panel);
 
     // This may be related to some bug. it seems change object name.
     // This is for reference to change stype.
-    setObjectName("SendContainerFrame");
+    this->setObjectName("SendContainerFrame");
 
     containerNum ++;
 
@@ -22,6 +22,13 @@ SendContainer::SendContainer(QWidget *parent)
     sendButton = new QPushButton("send");
     sendButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
     sendButton->setMinimumSize(60,60);
+
+    commandInput = new QLineEdit(this);
+    commandInput->setMaxLength(1);
+    commandInput->setAlignment(Qt::AlignCenter);
+    commandInput->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    commandInput->setFixedSize(50,50);
+    commandInput->setStyleSheet("color:gray; font-size: 25px;");
 
     msg = new QLineEdit(this);
     msg->setPlaceholderText("OSC Message");
