@@ -4,13 +4,13 @@ SendContainer::SendContainer(QWidget *parent)
     :QFrame(parent)
 {
     // set frame default size
-    setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-    setMinimumSize(0,65);
-    setFrameShape(Panel);
+    this->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+    this->setMinimumSize(0,65);
+    this->setFrameShape(Panel);
 
     // This may be related to some bug. it seems change object name.
     // This is for reference to change stype.
-    setObjectName("SendContainerFrame");
+    this->setObjectName("SendContainerFrame");
 
     containerNum ++;
 
@@ -22,6 +22,13 @@ SendContainer::SendContainer(QWidget *parent)
     sendButton = new QPushButton("send");
     sendButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
     sendButton->setMinimumSize(60,60);
+
+    commandInput = new QLineEdit(this);
+    commandInput->setMaxLength(1);
+    commandInput->setAlignment(Qt::AlignCenter);
+    commandInput->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    commandInput->setFixedSize(50,50);
+    commandInput->setStyleSheet("color:gray; font-size: 25px;");
 
     msg = new QLineEdit(this);
     msg->setPlaceholderText("OSC Message");
@@ -36,11 +43,14 @@ SendContainer::SendContainer(QWidget *parent)
     layout3->addWidget(ip);
     layout2->addWidget(msg);
     layout2->addLayout(layout3);
+    layout1->addWidget(commandInput);
     layout1->addLayout(layout2);
     layout1->addWidget(sendButton);
+
     connect(sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
     connect(sendButton, SIGNAL(released()), this, SLOT(on_sendButton_released()));
+    connect(commandInput, SIGNAL(textChanged(const QString &)), this, SLOT(on_changed_text()));
 }
 
 SendContainer::~SendContainer(){}
@@ -54,10 +64,12 @@ void SendContainer::on_sendButton_clicked(){
 
 void SendContainer::on_sendButton_pressed(){
     this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
+    changeContainerColor(true);
 }
 
 void SendContainer::on_sendButton_released(){
     this->setStyleSheet("");
+    changeContainerColor(false);
 }
 
 void SendContainer::sendOscMessage(){
@@ -94,4 +106,19 @@ void SendContainer::setPort(QString portNum){
 
 void SendContainer::setIp(QString ipNum){
     ip->setText(ipNum);
+}
+
+void SendContainer::on_changed_text(){
+    commandInput->setText(commandInput->text().toUpper());
+}
+
+void SendContainer::changeContainerColor(bool state){
+    if(state) this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
+    else this->setStyleSheet("");
+}
+
+QOSCMessage* SendContainer::outOscMessage(){
+    InputConverter inputMessage = InputConverter(msg->text());
+    inputMessage.setMessage();
+    return inputMessage.getMessage();
 }

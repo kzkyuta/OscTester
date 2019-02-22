@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include "inputconverter.h"
 #include "qoscsender.h"
+//#include "qoscmessage.h"
 
 class SendContainer : public QFrame
 {
@@ -20,7 +21,9 @@ private:
     QLineEdit *port;
     QLineEdit *ip;
     QOSCSender *_oscSender;
+
 public:
+    QLineEdit *commandInput;
     explicit SendContainer(QWidget*);
     ~SendContainer();
     SendContainer(const SendContainer &);
@@ -35,11 +38,14 @@ public:
 
     static uint8_t containerNum;
     void sendOscMessage();
+    void changeContainerColor(bool);
+    QOSCMessage* outOscMessage();
 
 private slots:
     void on_sendButton_clicked();
     void on_sendButton_pressed();
     void on_sendButton_released();
+    void on_changed_text();
 };
 
 #endif // SENDCONTAINER_H

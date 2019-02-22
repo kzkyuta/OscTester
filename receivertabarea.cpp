@@ -18,7 +18,6 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
     parentLayout->addWidget(filterInput);
     parentLayout->addWidget(receivedMsgOutput);
     connect(filterInput, SIGNAL(textChanged(const QString &)), this, SLOT(onChangedText()));
-
 }
 
 ReceiverTabArea::~ReceiverTabArea(){}
