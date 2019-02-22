@@ -18,6 +18,14 @@ OscReceiver::~OscReceiver()
 }
 
 void OscReceiver::on_pushButton_clicked(){
+    addreceiverTab();
+}
+
+void OscReceiver::on_lineEdit_returnPressed(){
+    addreceiverTab();
+}
+
+void OscReceiver::addreceiverTab(){
     QString portString = ui->lineEdit->text();
     bool isSuccess;
     unsigned int portNum = portString.toInt(&isSuccess, 10);
