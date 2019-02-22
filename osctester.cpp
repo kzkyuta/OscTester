@@ -9,6 +9,17 @@ OscTester::OscTester(QWidget *parent) :
     _scroll = new VerticalScrollArea(3, 1, this);
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
+
+    QMenuBar *menuBar = new QMenuBar(0);
+    QMenu *fileMenu = menuBar->addMenu("&File");
+    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open); // TODO: add function
+    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close); // // TODO: add function
+
+    QMenu *windowMenu = menuBar->addMenu("&Window");
+    windowMenu->addAction(tr("&Sender"), this, SLOT(), QKeySequence::Save);
+    windowMenu->addAction(tr("&Receiver"), this, SLOT(), QKeySequence::Refresh);
+    QMenu *viewMenu = menuBar->addMenu("&View");
+    viewMenu->addAction(tr("&Always On Top"), this, SLOT(), QKeySequence::Refresh);
 }
 
 OscTester::~OscTester()

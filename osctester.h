@@ -17,6 +17,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QMenuBar>
 #include "qoscbundle.h"
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
