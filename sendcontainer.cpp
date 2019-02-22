@@ -51,6 +51,7 @@ SendContainer::SendContainer(QWidget *parent)
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
     connect(sendButton, SIGNAL(released()), this, SLOT(on_sendButton_released()));
     connect(commandInput, SIGNAL(textChanged(const QString &)), this, SLOT(on_changed_text()));
+    connect(msg, SIGNAL(returnPressed()), this, SLOT(on_lineEdit_returnPressed()));
 }
 
 SendContainer::~SendContainer(){}
@@ -59,6 +60,10 @@ SendContainer::~SendContainer(){}
 uint8_t SendContainer::containerNum = 0;
 
 void SendContainer::on_sendButton_clicked(){
+    this->sendOscMessage();
+}
+
+void SendContainer::on_lineEdit_returnPressed(){
     this->sendOscMessage();
 }
 
@@ -121,4 +126,18 @@ QOSCMessage* SendContainer::outOscMessage(){
     InputConverter inputMessage = InputConverter(msg->text());
     inputMessage.setMessage();
     return inputMessage.getMessage();
+}
+
+void SendContainer::keyPressEvent(QKeyEvent* event){
+    if(event->key() == Qt::Key_Return) {
+        this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
+        changeContainerColor(true);
+    }
+}
+
+void SendContainer::keyReleaseEvent(QKeyEvent* event){
+    if(event->key() == Qt::Key_Return) {
+        this->setStyleSheet("");
+        changeContainerColor(false);
+    }
 }

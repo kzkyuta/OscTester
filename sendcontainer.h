@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include "inputconverter.h"
 #include "qoscsender.h"
-//#include "qoscmessage.h"
+#include <QKeyEvent>
 
 class SendContainer : public QFrame
 {
@@ -42,10 +42,14 @@ public:
     QOSCMessage* outOscMessage();
 
 private slots:
-    void on_sendButton_clicked();
+    void on_sendButton_clicked();  // send Osc Message
     void on_sendButton_pressed();
     void on_sendButton_released();
     void on_changed_text();
+    void on_lineEdit_returnPressed();  // send Osc Message
+protected:
+    void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent*);
 };
 
 #endif // SENDCONTAINER_H
