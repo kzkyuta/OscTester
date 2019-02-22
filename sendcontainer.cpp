@@ -116,3 +116,9 @@ void SendContainer::changeContainerColor(bool state){
     if(state) this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
     else this->setStyleSheet("");
 }
+
+QOSCMessage* SendContainer::outOscMessage(){
+    InputConverter inputMessage = InputConverter(msg->text());
+    inputMessage.setMessage();
+    return inputMessage.getMessage();
+}

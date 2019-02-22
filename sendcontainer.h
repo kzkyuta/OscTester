@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include "inputconverter.h"
 #include "qoscsender.h"
+//#include "qoscmessage.h"
 
 class SendContainer : public QFrame
 {
@@ -38,6 +39,7 @@ public:
     static uint8_t containerNum;
     void sendOscMessage();
     void changeContainerColor(bool);
+    QOSCMessage* outOscMessage();
 
 private slots:
     void on_sendButton_clicked();

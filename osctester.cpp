@@ -97,10 +97,30 @@ void OscTester::on_exportJson_clicked(){
 }
 
 void OscTester::keyPressEvent(QKeyEvent* event){
+    QVector<int> selectedContainers;
     for(int i = 0; i < SendContainer::containerNum; i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(true);
-            containers[i]->sendOscMessage();
+            selectedContainers.append(i);
+        }
+    }
+    if(selectedContainers.size() == 0) return;
+    else if(selectedContainers.size() == 1){
+        containers[selectedContainers[0]]->sendOscMessage();
+    }else{
+        if(checkBundleSender(containers, selectedContainers)){
+            bundleSender = new QOSCSender(BundleIp, Bundleport.toInt(), this);
+            bundleMessage = new QOSCBundle();
+            if(setBundleMessage(bundleMessage, containers, selectedContainers)){
+                bundleSender->sendBundle(*bundleMessage);
+            }
+            delete bundleMessage;
+            delete bundleSender;
+        }else{
+            for(int i = 0; i < SendContainer::containerNum; i++){
+                containers[i]->changeContainerColor(false);
+            }
+            return;
         }
     }
 }
@@ -111,4 +131,36 @@ void OscTester::keyReleaseEvent(QKeyEvent* event){
             containers[i]->changeContainerColor(false);
         }
     }
+}
+
+bool OscTester::checkBundleSender(QVector<SendContainer *> containers, QVector<int> selectedMsg){
+    BundleIp = containers[selectedMsg[0]]->getIp();
+    Bundleport = containers[selectedMsg[0]]->getPort();
+
+    if((!BundleIp.isNull() && !Bundleport.isNull()) && (!BundleIp.isEmpty() && !Bundleport.isEmpty())){
+        foreach(int containerNum, selectedMsg){
+            if(BundleIp == containers[selectedMsg[containerNum]]->getIp() &&
+                    Bundleport == containers[selectedMsg[containerNum]]->getPort()){
+                return true;
+            }else{
+                QMessageBox::warning(this, tr("Error"), tr("please match Port or IP values."));
+                return false;
+            }
+        }
+    }else{
+        QMessageBox::warning(this, tr("Error"), tr("Put Port number and Ip"));
+        return false;
+    }
+}
+
+bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContainer*> containers, QVector<int> selectedMsg){
+    foreach(int containerNum, selectedMsg){
+        try {
+            bundleMessage->addMessage(containers[containerNum]->outOscMessage());
+        } catch (...) {
+            QMessageBox::warning(this, tr("Error"), tr("Could not add OscMessages to bundle container"));
+            return false;
+        }
+    }
+    return true;
 }
