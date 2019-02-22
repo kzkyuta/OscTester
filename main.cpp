@@ -7,8 +7,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     OscTester w;
     OscReceiver *oscReceiverWindow = new OscReceiver();
-    w.show();
+
     oscReceiverWindow->show();
+    w.show();
 
     return a.exec();
 }
