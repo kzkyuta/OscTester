@@ -59,8 +59,7 @@ void ReceiverTabArea::showReceivedMsg(){
             QString grayText = QString("<FONT COLOR=gray>%1</FONT>").arg(receivedMsgs[i]);
             receivedMsgOutput->appendHtml(grayText);
         }else{
-            QString whiteText = QString("<FONT COLOR=white>%1</FONT>").arg(receivedMsgs[i]);
-            receivedMsgOutput->appendHtml(whiteText);
+            receivedMsgOutput->appendHtml(receivedMsgs[i]);
         }
     }
 }
