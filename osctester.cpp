@@ -9,7 +9,6 @@ OscTester::OscTester(QWidget *parent) :
     _scroll = new VerticalScrollArea(3, 1, this);
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
-    ui->sendBundle->setEnabled(false);
 }
 
 OscTester::~OscTester()
