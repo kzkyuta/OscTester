@@ -32,7 +32,6 @@ void OscTester::closeEvent(QCloseEvent *event){
     QApplication::quit();
     event->ignore();
     exit(EXIT_SUCCESS);
-//    exit(EXIT_FAILURE);
 }
 
 void OscTester::on_addContainer_clicked(){

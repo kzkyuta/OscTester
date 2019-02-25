@@ -33,8 +33,6 @@ private:
     Ui::OscTester *ui;
     void closeEvent(QCloseEvent *event);
 public:
-    int nrows = 1;
-    int ncols = 5;
     QString BundleIp;
     QString Bundleport;
 
