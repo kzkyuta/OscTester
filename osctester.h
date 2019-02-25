@@ -4,7 +4,6 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
-#include "oscsender.h"
 #include "oscreceiver.h"
 
 #include <QMainWindow>

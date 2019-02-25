@@ -11,9 +11,6 @@ OscTester::OscTester(QWidget *parent) :
     ui->verticalLayout_2->addWidget(_scroll);
     windowStatus = true;
 
-//    OscSender v;
-
-//    v.show();
     w.show();
 
     QMenuBar *menuBar = new QMenuBar(0);
