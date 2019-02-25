@@ -9,6 +9,12 @@ OscTester::OscTester(QWidget *parent) :
     _scroll = new VerticalScrollArea(3, 1, this);
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(_scroll);
+    windowStatus = true;
+
+//    OscSender v;
+
+//    v.show();
+    w.show();
 
     QMenuBar *menuBar = new QMenuBar(0);
     QMenu *fileMenu = menuBar->addMenu("&File");
@@ -16,8 +22,8 @@ OscTester::OscTester(QWidget *parent) :
     fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close); // // TODO: add function
 
     QMenu *windowMenu = menuBar->addMenu("&Window");
-    windowMenu->addAction(tr("&Sender"), this, SLOT(), QKeySequence::Save);
-    windowMenu->addAction(tr("&Receiver"), this, SLOT(), QKeySequence::Refresh);
+    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
+    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
     QMenu *viewMenu = menuBar->addMenu("&View");
     viewMenu->addAction(tr("&Always On Top"), this, SLOT(), QKeySequence::Refresh);
 }
@@ -29,9 +35,10 @@ OscTester::~OscTester()
 
 void OscTester::closeEvent(QCloseEvent *event){
     // TODO: the correct way to finish the program.
-    QApplication::quit();
-    event->ignore();
-    exit(EXIT_SUCCESS);
+    windowStatus = false;
+//    QApplication::quit();
+//    event->ignore();
+//    exit(EXIT_SUCCESS);
 }
 
 void OscTester::on_addContainer_clicked(){
@@ -172,4 +179,17 @@ bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContaine
         }
     }
     return true;
+}
+
+void OscTester::showSenderWindow(){
+    if(!windowStatus){
+//    if(!OscSender::getWindowSatus()){
+        this->show();
+    }
+}
+
+void OscTester::showReveiverWindow(){
+    if(!OscReceiver::getWindowStatus()){
+        w.show();
+    }
 }

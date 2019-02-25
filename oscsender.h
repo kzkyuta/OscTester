@@ -4,7 +4,6 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
-
 #include <QMainWindow>
 #include <vector>
 #include <QDebug>
@@ -22,6 +21,7 @@
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
 
+
 namespace Ui {
 class OscSender;
 }
@@ -37,6 +37,7 @@ public:
     QString BundleIp;
     QString Bundleport;
 
+    QOSCReceiver *_oscReceiver;
     VerticalScrollArea *_scroll;
     QVector<SendContainer*> containers;
     bool checkBundleSender(QVector<SendContainer*>, QVector<int>);
@@ -45,18 +46,22 @@ public:
     QOSCSender *bundleSender;
     QOSCBundle *bundleMessage;
 
-private slots:
-    void on_addContainer_clicked();
-    void on_importJson_clicked();
-    void on_exportJson_clicked();
+    static bool getWindowSatus();
+    static void setWindowSatus(bool);
 
 private:
     Ui::OscSender *ui;
     void closeEvent(QCloseEvent *event);
+    static bool windowStatus;
 
 protected:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
+
+private slots:
+    void on_addContainer_clicked();
+    void on_importJson_clicked();
+    void on_exportJson_clicked();
 };
 
 #endif // OSCSENDER_H

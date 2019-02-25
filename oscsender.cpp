@@ -1,10 +1,13 @@
 #include "oscsender.h"
 #include "ui_oscsender.h"
 
+bool OscSender::windowStatus = false;
+
 OscSender::OscSender(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OscSender)
 {
+    windowStatus = true;
     _scroll = new VerticalScrollArea(3, 1, this);
     ui->setupUi(this);
     ui->verticalLayout->addWidget(_scroll);
@@ -15,11 +18,17 @@ OscSender::~OscSender()
     delete ui;
 }
 
+bool OscSender::getWindowSatus(){
+    return windowStatus;
+}
+
+void OscSender::setWindowSatus(bool status){
+    windowStatus = status;
+}
+
 void OscSender::closeEvent(QCloseEvent *event){
     // TODO: the correct way to finish the program.
-//    QApplication::quit();
-//    event->ignore();
-//    exit(EXIT_SUCCESS);
+    windowStatus = false;
 }
 
 void OscSender::on_addContainer_clicked(){
@@ -161,3 +170,4 @@ bool OscSender::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContaine
     }
     return true;
 }
+

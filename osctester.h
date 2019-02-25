@@ -4,6 +4,8 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
+#include "oscsender.h"
+#include "oscreceiver.h"
 
 #include <QMainWindow>
 #include <vector>
@@ -47,14 +49,19 @@ public:
     QOSCSender *bundleSender;
     QOSCBundle *bundleMessage;
 
+    bool windowStatus;
+
 private slots:
     void on_addContainer_clicked();
     void on_importJson_clicked();
     void on_exportJson_clicked();
+    void showSenderWindow();
+    void showReveiverWindow();
 
 protected:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
+    OscReceiver w;
 };
 
 #endif // OSCTESTER_H

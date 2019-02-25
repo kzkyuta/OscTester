@@ -4,17 +4,32 @@
 
 uint8_t ReceiverTabArea::tabNum = 0;
 
+bool OscReceiver::windowStatus = false;
+
 OscReceiver::OscReceiver(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OscReceiver)
 {
     ui->setupUi(this);
     ReceiverTabArea::tabNum = 0;
+    windowStatus = true;
 }
 
 OscReceiver::~OscReceiver()
 {
     delete ui;
+}
+
+void OscReceiver::closeEvent(QCloseEvent *event){
+    // TODO: the correct way to finish the program.
+    windowStatus = false;
+}
+
+bool OscReceiver::getWindowStatus(){
+    return windowStatus;
+}
+void OscReceiver::setWindowStatus(bool status){
+    windowStatus = status;
 }
 
 void OscReceiver::on_pushButton_clicked(){

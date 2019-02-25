@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>435</width>
-    <height>380</height>
+    <width>453</width>
+    <height>482</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Osc Sender</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -33,9 +33,6 @@
        <number>0</number>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="spacing">
-        <number>-1</number>
-       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>

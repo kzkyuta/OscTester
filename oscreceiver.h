@@ -19,6 +19,9 @@ public:
     QTabWidget *tabArea = nullptr;
     QVector<ReceiverTabArea*> tabCotents;
 
+    static bool getWindowStatus();
+    static void setWindowStatus(bool);
+
 private slots:
     void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
@@ -26,6 +29,8 @@ private slots:
 private:
     Ui::OscReceiver *ui;
     void addreceiverTab();
+    static bool windowStatus;
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // OSCRECEIVER_H
