@@ -33,7 +33,8 @@ SOURCES += \
     verticalscrollarea.cpp \
     sendcontainer.cpp \
     oscreceiver.cpp \
-    receivertabarea.cpp
+    receivertabarea.cpp \
+    oscsender.cpp
 
 HEADERS += \
         osctester.h \
@@ -41,11 +42,13 @@ HEADERS += \
     verticalscrollarea.h \
     sendcontainer.h \
     oscreceiver.h \
-    receivertabarea.h
+    receivertabarea.h \
+    oscsender.h
 
 FORMS += \
-        osctester.ui \
-    oscreceiver.ui
+    oscreceiver.ui \
+    osctester.ui \
+    oscsender.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
