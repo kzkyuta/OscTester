@@ -18,11 +18,20 @@ OscTester::OscTester(QWidget *parent) :
     fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open); // TODO: add function
     fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close); // // TODO: add function
 
+    fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
+    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
+
     QMenu *windowMenu = menuBar->addMenu("&Window");
     windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
     windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
+
+    alwaysOnTop = new QAction("Always on Top of Window", this);
+    alwaysOnTop->setCheckable(true);
+    alwaysOnTop->setChecked(false);
+    connect(alwaysOnTop, SIGNAL(triggered()), this, SLOT(alwaysOnTopCheck()));
+
     QMenu *viewMenu = menuBar->addMenu("&View");
-    viewMenu->addAction(tr("&Always On Top"), this, SLOT(), QKeySequence::Refresh);
+    viewMenu->addAction(alwaysOnTop);
 }
 
 OscTester::~OscTester()
@@ -185,4 +194,22 @@ void OscTester::showReveiverWindow(){
     if(!OscReceiver::getWindowStatus()){
         w.show();
     }
+}
+
+void OscTester::showAboutApp(){
+    if(!AboutOscTesterApp::getWindowStatus()){
+        a.show();
+    }
+}
+
+void OscTester::alwaysOnTopCheck(){
+    // change the window mode with Bitwise Operators
+    if(alwaysOnTop->isChecked()) flags |= Qt::WindowStaysOnTopHint;
+    else flags ^= Qt::WindowStaysOnTopHint;
+
+    // set settings
+    this->setWindowFlags(flags);
+    w.setWindowFlags(flags);
+    this->show();
+    w.show();
 }

@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QMenuBar>
+#include <QPointer>
 #include "qoscbundle.h"
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
@@ -34,6 +35,7 @@ class OscTester : public QMainWindow
 private:
     Ui::OscTester *ui;
     void closeEvent(QCloseEvent *event);
+    QPointer<QAction> alwaysOnTop;
 public:
     QString BundleIp;
     QString Bundleport;
@@ -57,11 +59,15 @@ private slots:
     void on_exportJson_clicked();
     void showSenderWindow();
     void showReveiverWindow();
+    void showAboutApp();
+    void alwaysOnTopCheck();
 
 protected:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
     OscReceiver w;
+    AboutOscTesterApp a;
+    Qt::WindowFlags flags = nullptr;
 };
 
 #endif // OSCTESTER_H
