@@ -48,6 +48,10 @@ void SendContainer::sendOscMessage(){
     }
 }
 
+QString SendContainer::getComm(){
+    return commandInput->text();
+}
+
 QString SendContainer::getMsg(){
     return msg->text();
 }
@@ -58,6 +62,10 @@ QString SendContainer::getPort(){
 
 QString SendContainer::getIp(){
     return ip->text();
+}
+
+void SendContainer::setComm(QString command){
+    commandInput->setText(command);
 }
 
 void SendContainer::setMsg(QString message){

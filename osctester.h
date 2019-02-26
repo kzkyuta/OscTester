@@ -20,6 +20,7 @@
 #include <QKeyEvent>
 #include <QMenuBar>
 #include <QPointer>
+#include <QSettings>
 #include "qoscbundle.h"
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
@@ -59,6 +60,14 @@ private:
     bool windowStatus;
     void windowLayoutinit();
     void menuInit();
+
+    // file management.
+    void jsonFileImport(QString);
+    void jsonFileExport(QString);
+
+    // for initial setting
+    void writeSettings();
+    void readSettings();
 
 private slots:
     // osc sender function

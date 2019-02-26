@@ -30,10 +30,12 @@ public:
     ~SendContainer();
     SendContainer(const SendContainer &);
 
+    QString getComm();
     QString getMsg();
     QString getPort();
     QString getIp();
 
+    void setComm(QString);
     void setMsg(QString);
     void setPort(QString);
     void setIp(QString);
