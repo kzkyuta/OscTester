@@ -12,5 +12,7 @@ int main(int argc, char *argv[])
 
     x.show();
 
+    Q_INIT_RESOURCE(osctester);
+
     return a.exec();
 }

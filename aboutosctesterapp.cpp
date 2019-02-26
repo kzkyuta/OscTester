@@ -6,7 +6,7 @@ AboutOscTesterApp::AboutOscTesterApp(QWidget *parent) :
     ui(new Ui::AboutOscTesterApp)
 {
     ui->setupUi(this);
-    QPixmap pix("/Users/kozakiyuta/Qt/apps/OscTester/iconData/iconData.png");
+    QPixmap pix("://resource/iconData.png");
     ui->label_pic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio));
 }
 
