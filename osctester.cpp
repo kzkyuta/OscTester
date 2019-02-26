@@ -5,33 +5,11 @@ OscTester::OscTester(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OscTester)
 {
-//    SendContainer::containerNum = 0;
-    _scroll = new VerticalScrollArea(3, 1, this);
-    ui->setupUi(this);
-    ui->verticalLayout_2->addWidget(_scroll);
-    windowStatus = true;
+    this->windowLayoutinit();
+    this->menuInit();
 
+    // show oscReceiver
     w.show();
-
-    QMenuBar *menuBar = new QMenuBar(0);
-    QMenu *fileMenu = menuBar->addMenu("&File");
-    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open); // TODO: add function
-    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close); // // TODO: add function
-
-    fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
-    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
-
-    QMenu *windowMenu = menuBar->addMenu("&Window");
-    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
-    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
-
-    alwaysOnTop = new QAction("Always on Top of Window", this);
-    alwaysOnTop->setCheckable(true);
-    alwaysOnTop->setChecked(false);
-    connect(alwaysOnTop, SIGNAL(triggered()), this, SLOT(alwaysOnTopCheck()));
-
-    QMenu *viewMenu = menuBar->addMenu("&View");
-    viewMenu->addAction(alwaysOnTop);
 }
 
 OscTester::~OscTester()
@@ -212,4 +190,34 @@ void OscTester::alwaysOnTopCheck(){
     w.setWindowFlags(flags);
     this->show();
     w.show();
+}
+
+void OscTester::windowLayoutinit(){
+    _scroll = new VerticalScrollArea(3, 1, this);
+    ui->setupUi(this);
+    ui->verticalLayout_2->addWidget(_scroll);
+    windowStatus = true;
+}
+
+void OscTester::menuInit(){
+
+    QMenuBar *menuBar = new QMenuBar(0);
+    QMenu *fileMenu = menuBar->addMenu("&File");
+    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open);
+    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close);
+
+    fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
+//    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
+
+    QMenu *windowMenu = menuBar->addMenu("&Window");
+    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
+    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
+
+    alwaysOnTop = new QAction("Always on Top of Window", this);
+    alwaysOnTop->setCheckable(true);
+    alwaysOnTop->setChecked(false);
+    connect(alwaysOnTop, SIGNAL(triggered()), this, SLOT(alwaysOnTopCheck()));
+
+    QMenu *viewMenu = menuBar->addMenu("&View");
+    viewMenu->addAction(alwaysOnTop);
 }

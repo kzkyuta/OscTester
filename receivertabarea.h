@@ -18,6 +18,7 @@ class ReceiverTabArea : public QWidget
 public:
     explicit ReceiverTabArea(unsigned int, QWidget* = nullptr);
     ~ReceiverTabArea();
+
     static uint8_t tabNum;
     uint8_t getTabNum();
     QOSCReceiver *oscReceiver;
@@ -34,6 +35,7 @@ private:
     unsigned int port;
     QPlainTextEdit *receivedMsgOutput;
     QVBoxLayout *parentLayout;
+    void layoutInit();
 };
 
 #endif // RECEIVERTABAREA_H

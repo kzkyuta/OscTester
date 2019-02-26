@@ -12,9 +12,10 @@
 
 class SendContainer : public QFrame
 {
-    Q_OBJECT // マクロ、継承する際に必要
+    Q_OBJECT
 
 private:
+    // for layout
     QHBoxLayout *layout1;
     QPushButton *sendButton;
     QLineEdit *msg;
@@ -22,8 +23,9 @@ private:
     QLineEdit *ip;
     QOSCSender *_oscSender;
 
+    void layoutInit();
+
 public:
-    QLineEdit *commandInput;
     explicit SendContainer(QWidget*);
     ~SendContainer();
     SendContainer(const SendContainer &);
@@ -37,9 +39,15 @@ public:
     void setIp(QString);
 
     static uint8_t containerNum;
+
+    // for sending osc message
     void sendOscMessage();
-    void changeContainerColor(bool);
     QOSCMessage* outOscMessage();
+
+    void changeContainerColor(bool);
+
+    // for key input. this will be used at OscTester class.
+    QLineEdit *commandInput;
 
 private slots:
     void on_sendButton_clicked();  // send Osc Message
@@ -47,6 +55,7 @@ private slots:
     void on_sendButton_released();
     void on_changed_text();
     void on_lineEdit_returnPressed();  // send Osc Message
+
 protected:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);

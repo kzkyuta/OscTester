@@ -3,49 +3,9 @@
 SendContainer::SendContainer(QWidget *parent)
     :QFrame(parent)
 {
-    // set frame default size
-    this->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-    this->setMinimumSize(0,65);
-    this->setFrameShape(Panel);
-
-    // This may be related to some bug. it seems change object name.
-    // This is for reference to change stype.
-    this->setObjectName("SendContainerFrame");
+    layoutInit();
 
     containerNum ++;
-
-    // make a grid instance in QFrame
-    layout1 = new QHBoxLayout(this);
-    QVBoxLayout* layout2 = new QVBoxLayout();
-    QHBoxLayout* layout3 = new QHBoxLayout();
-
-    sendButton = new QPushButton("send");
-    sendButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
-    sendButton->setMinimumSize(60,60);
-
-    commandInput = new QLineEdit(this);
-    commandInput->setMaxLength(1);
-    commandInput->setAlignment(Qt::AlignCenter);
-    commandInput->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-    commandInput->setFixedSize(50,50);
-    commandInput->setStyleSheet("color:gray; font-size: 25px;");
-
-    msg = new QLineEdit(this);
-    msg->setPlaceholderText("OSC Message");
-
-    port = new QLineEdit(this);
-    port->setPlaceholderText("port");
-
-    ip = new QLineEdit(this);
-    ip->setPlaceholderText("IP Adress");
-
-    layout3->addWidget(port);
-    layout3->addWidget(ip);
-    layout2->addWidget(msg);
-    layout2->addLayout(layout3);
-    layout1->addWidget(commandInput);
-    layout1->addLayout(layout2);
-    layout1->addWidget(sendButton);
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
@@ -140,4 +100,49 @@ void SendContainer::keyReleaseEvent(QKeyEvent* event){
         this->setStyleSheet("");
         changeContainerColor(false);
     }
+}
+
+void SendContainer::layoutInit(){
+    // set frame default size
+    this->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+    this->setMinimumSize(0,65);
+    this->setFrameShape(Panel);
+
+    // This may be related to some bug. it seems change object name.
+    // This is for reference to change stype.
+    this->setObjectName("SendContainerFrame");
+
+    // make a grid instance in QFrame
+    layout1 = new QHBoxLayout(this);
+    QVBoxLayout* layout2 = new QVBoxLayout();
+    QHBoxLayout* layout3 = new QHBoxLayout();
+
+    sendButton = new QPushButton("send");
+    sendButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
+    sendButton->setMinimumSize(60,60);
+
+    commandInput = new QLineEdit(this);
+    commandInput->setMaxLength(1);
+    commandInput->setAlignment(Qt::AlignCenter);
+    commandInput->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    commandInput->setFixedSize(50,50);
+    commandInput->setStyleSheet("color:gray; font-size: 25px;");
+
+    msg = new QLineEdit(this);
+    msg->setPlaceholderText("OSC Message");
+
+    port = new QLineEdit(this);
+    port->setPlaceholderText("port");
+
+    ip = new QLineEdit(this);
+    ip->setPlaceholderText("IP Adress");
+
+    layout3->addWidget(port);
+    layout3->addWidget(ip);
+    layout2->addWidget(msg);
+    layout2->addLayout(layout3);
+    layout1->addWidget(commandInput);
+    layout1->addLayout(layout2);
+    layout1->addWidget(sendButton);
+
 }

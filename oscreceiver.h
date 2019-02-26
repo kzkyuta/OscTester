@@ -16,6 +16,7 @@ class OscReceiver : public QMainWindow
 public:
     explicit OscReceiver(QWidget *parent = nullptr);
     ~OscReceiver();
+
     QTabWidget *tabArea = nullptr;
     QVector<ReceiverTabArea*> tabCotents;
 
@@ -29,8 +30,8 @@ private slots:
 private:
     Ui::OscReceiver *ui;
     void addreceiverTab();
-    static bool windowStatus;
     void closeEvent(QCloseEvent *event);
+    static bool windowStatus;
 };
 
 #endif // OSCRECEIVER_H

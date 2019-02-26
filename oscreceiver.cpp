@@ -23,7 +23,6 @@ OscReceiver::~OscReceiver()
 }
 
 void OscReceiver::closeEvent(QCloseEvent *event){
-    // TODO: the correct way to finish the program.
     windowStatus = false;
 }
 
