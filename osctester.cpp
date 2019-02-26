@@ -31,11 +31,7 @@ OscTester::~OscTester()
 }
 
 void OscTester::closeEvent(QCloseEvent *event){
-    // TODO: the correct way to finish the program.
     windowStatus = false;
-//    QApplication::quit();
-//    event->ignore();
-//    exit(EXIT_SUCCESS);
 }
 
 void OscTester::on_addContainer_clicked(){

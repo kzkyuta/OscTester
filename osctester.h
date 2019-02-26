@@ -22,6 +22,7 @@
 #include "qoscbundle.h"
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
+#include "aboutosctesterapp.h"
 
 namespace Ui {
 class OscTester;

@@ -17,6 +17,8 @@ OscReceiver::OscReceiver(QWidget *parent) :
 
 OscReceiver::~OscReceiver()
 {
+    QApplication::quit();
+    exit(EXIT_SUCCESS);
     delete ui;
 }
 
