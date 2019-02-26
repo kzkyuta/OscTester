@@ -2,8 +2,6 @@
 #include "ui_oscreceiver.h"
 #include <QMessageBox>
 
-uint8_t ReceiverTabArea::tabNum = 0;
-
 bool OscReceiver::windowStatus = false;
 
 OscReceiver::OscReceiver(QWidget *parent) :
@@ -34,15 +32,14 @@ void OscReceiver::setWindowStatus(bool status){
 }
 
 void OscReceiver::on_pushButton_clicked(){
-    addreceiverTab();
+    addreceiverTab(ui->lineEdit->text());
 }
 
 void OscReceiver::on_lineEdit_returnPressed(){
-    addreceiverTab();
+    addreceiverTab(ui->lineEdit->text());
 }
 
-void OscReceiver::addreceiverTab(){
-    QString portString = ui->lineEdit->text();
+void OscReceiver::addreceiverTab(QString portString){
     bool isSuccess;
     unsigned int portNum = portString.toInt(&isSuccess, 10);
     if(!isSuccess) return;

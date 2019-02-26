@@ -18,6 +18,7 @@ public:
     void send(QOSCBundle bundle);
     osc::OutboundPacketStream makeBundlePacket(QOSCBundle bundle);
     void sendBundle(QOSCBundle bundle);
+    void sendMessage(QOSCMessage *message);
 protected:
 private:
     UdpTransmitSocket *_socket;

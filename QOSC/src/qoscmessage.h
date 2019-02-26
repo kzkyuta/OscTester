@@ -32,6 +32,7 @@ public:
     QOSCMessage* addTime(int value);
 
     osc::OutboundPacketStream* getPacket();
+    osc::OutboundPacketStream* getMessagePacket();
     QVector<QOSCArgument*> getArguments();
     int getSize();
     QString getAddress();

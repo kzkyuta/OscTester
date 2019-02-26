@@ -17,8 +17,18 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
 
 ReceiverTabArea::~ReceiverTabArea(){}
 
+uint8_t ReceiverTabArea::tabNum = 0;
+
 uint8_t ReceiverTabArea::getTabNum(){
     return tabNum;
+}
+
+unsigned int ReceiverTabArea::getPort(){
+    return port;
+}
+
+void ReceiverTabArea::setPort(unsigned int portNum){
+    port = portNum;
 }
 
 void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){

@@ -10,10 +10,13 @@ OscTester::OscTester(QWidget *parent) :
 
     // show oscReceiver
     w.show();
+
+    readSettings();
 }
 
 OscTester::~OscTester()
 {
+    writeSettings();
     delete ui;
 }
 
@@ -37,6 +40,22 @@ void OscTester::on_importJson_clicked(){  // TODO: file checker
     {   //CANCEL
         return;
     }
+    jsonFileImport(fileName);
+}
+
+void OscTester::on_exportJson_clicked(){
+    // Generate File Save Dialog
+    QString fileName = QFileDialog::getSaveFileName(this,
+                        tr("Save Json"), "",
+                        tr("Json (*.json);;All Files (*)"));
+    if(fileName=="")
+    {   //CANCEL
+        return;
+    }
+    jsonFileExport(fileName);
+}
+
+void OscTester::jsonFileImport(QString fileName){
 
     // open file and set ReadOnly mode
     QFile openFile(fileName);
@@ -54,26 +73,19 @@ void OscTester::on_importJson_clicked(){  // TODO: file checker
         containers.append(new SendContainer(this));
         _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
         QJsonObject temp = jsonArr[i].toObject();
+        containers[SendContainer::containerNum - 1]->setComm(temp["command"].toString());
         containers[SendContainer::containerNum - 1]->setMsg(temp["address"].toString());
         containers[SendContainer::containerNum - 1]->setPort(temp["port"].toString());
         containers[SendContainer::containerNum - 1]->setIp(temp["ip"].toString());
     }
 }
 
-void OscTester::on_exportJson_clicked(){
-    // Generate File Save Dialog
-    QString fileName = QFileDialog::getSaveFileName(this,
-                        tr("Save Json"), "",
-                        tr("Json (*.json);;All Files (*)"));
-    if(fileName=="")
-    {   //CANCEL
-        return;
-    }
-
+void OscTester::jsonFileExport(QString fileName){
     // set Json File Data
     QJsonObject jsonObjParent, jsonObjChild;
     QJsonArray jsonArr;
     for(int i =0; i < containers.size(); i++){
+        jsonObjChild["command"] = containers[i]->getComm();
         jsonObjChild["address"] = containers[i]->getMsg();
         jsonObjChild["port"] = containers[i]->getPort();
         jsonObjChild["ip"] = containers[i]->getIp();
@@ -87,9 +99,10 @@ void OscTester::on_exportJson_clicked(){
 
     // Write Data on file which user named
     QFile saveFile(fileName);
-    saveFile.open(QIODevice::WriteOnly);
-    saveFile.write(data);
-    saveFile.close();
+    if(saveFile.open(QIODevice::WriteOnly | QIODevice::Append)){
+        saveFile.write(data);
+        saveFile.close();
+    }
 }
 
 void OscTester::keyPressEvent(QKeyEvent* event){
@@ -220,4 +233,66 @@ void OscTester::menuInit(){
 
     QMenu *viewMenu = menuBar->addMenu("&View");
     viewMenu->addAction(alwaysOnTop);
+}
+
+void OscTester::writeSettings(){
+    // instance for saving sate and geometry.
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,"KZK", "OSC Tester");
+    // groupe for Sender window
+    settings.beginGroup("Sender");
+    settings.setValue("geometry", this->saveGeometry());
+    settings.setValue("state", this->saveState());
+    settings.setValue("containerNum", SendContainer::containerNum);
+    settings.endGroup();
+
+    // groupe for each container value
+    for(int i = 0; i < SendContainer::containerNum; i++){
+        settings.beginGroup("container" + QString::number(i));
+        settings.setValue("command", containers[i]->getComm());
+        settings.setValue("message", containers[i]->getMsg());
+        settings.setValue("port", containers[i]->getPort());
+        settings.setValue("ip", containers[i]->getIp());
+        settings.endGroup();
+    }
+
+    // groupe for receiver
+    settings.beginGroup("Receiver");
+    settings.setValue("geometry", w.saveGeometry());
+    settings.setValue("state", w.saveState());
+    settings.setValue("containerNum", ReceiverTabArea::tabNum);
+    for(int i = 0; i < ReceiverTabArea::tabNum; i++){
+        settings.setValue("portNum" + QString::number(i), QString::number(w.tabCotents[i]->getPort()));
+    }
+    settings.endGroup();
+}
+
+void OscTester::readSettings(){
+    // instance for saving sate and geometry.
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,"KZK", "OSC Tester");
+
+    // read data for geometry and state for sender window.
+    this->restoreGeometry(settings.value("Sender/geometry").toByteArray());
+    this->restoreState(settings.value("Sender/state").toByteArray());
+
+    // read data for each containers
+    for(int i = 0; i < settings.value("Sender/containerNum").toInt(); i++){
+        // add sendContainer instance to vector list
+        containers.append(new SendContainer(this));
+        _scroll->addWidget(containers.back(), i + 1, 1);
+
+        // read each data
+        containers[i]->setComm(settings.value("container" + QString::number(i) + "/command").toString());
+        containers[i]->setMsg(settings.value("container" + QString::number(i) + "/message").toString());
+        containers[i]->setPort(settings.value("container" + QString::number(i) + "/port").toString());
+        containers[i]->setIp(settings.value("container" + QString::number(i) + "/ip").toString());
+    }
+
+    // read data for receiver
+    w.restoreGeometry(settings.value("Receiver/geometry").toByteArray());
+    w.restoreState(settings.value("Receiver/state").toByteArray());
+
+    // read each data
+    for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
+        w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
+    }
 }

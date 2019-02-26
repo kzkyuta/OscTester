@@ -30,10 +30,12 @@ public:
     ~SendContainer();
     SendContainer(const SendContainer &);
 
+    QString getComm();
     QString getMsg();
     QString getPort();
     QString getIp();
 
+    void setComm(QString);
     void setMsg(QString);
     void setPort(QString);
     void setIp(QString);
@@ -57,7 +59,7 @@ private slots:
     void on_lineEdit_returnPressed();  // send Osc Message
 
 protected:
-    void keyPressEvent(QKeyEvent*);
+//    void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
 };
 
