@@ -42,7 +42,7 @@ void SendContainer::sendOscMessage(){
     if(!ip->text().isNull() && !port->text().isNull()){
         if(!ip->text().isEmpty() && !port->text().isEmpty()){
             _oscSender = new QOSCSender(ip->text(), port->text().toInt(), this);
-            _oscSender->send(inputMessage.getMessage());
+            _oscSender->sendMessage(inputMessage.getMessage());
             delete _oscSender;
         }
     }

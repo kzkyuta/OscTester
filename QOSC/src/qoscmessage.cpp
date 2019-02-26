@@ -127,6 +127,34 @@ osc::OutboundPacketStream* QOSCMessage::getPacket()
     _packet << osc::EndBundle;
     return &_packet;
 }
+
+osc::OutboundPacketStream* QOSCMessage::getMessagePacket(){
+    _packet.Clear();
+    _packet << osc::BeginMessage(_address.toStdString().c_str());
+    foreach(QOSCArgument* argument, _arguments)
+    {
+
+        if(argument->_type == QOSCARGUMENT_INT)
+        {
+            _packet << static_cast<QOSCArgument_int*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_FLOAT)
+        {
+            _packet << (float) static_cast<QOSCArgument_float*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_BOOL)
+
+        {
+            _packet << static_cast<QOSCArgument_bool*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_STRING)
+        {
+            _packet << static_cast<QOSCArgument_string*>(argument)->_value.toStdString().c_str();
+        }
+    }
+    _packet << osc::EndMessage;
+    return &_packet;
+}
 QVector<QOSCArgument*> QOSCMessage::getArguments()
 {
     return _arguments;

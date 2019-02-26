@@ -21,9 +21,7 @@ void InputConverter::setMessage(){
             }
         }else{
             int argInt = m_string_list[i].toInt(&cast_int_result);
-            qInfo() << cast_int_result;
             if(cast_int_result){
-                qInfo() << argInt;
                 _message->addInt(argInt);
                 continue;
             }else{
