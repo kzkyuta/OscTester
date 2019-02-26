@@ -8,12 +8,25 @@ AboutOscTesterApp::AboutOscTesterApp(QWidget *parent) :
     ui->setupUi(this);
     QPixmap pix("/Users/kozakiyuta/Qt/apps/OscTester/iconData/iconData.png");
     ui->label_pic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio));
-
 }
 
 AboutOscTesterApp::~AboutOscTesterApp()
 {
     delete ui;
+}
+
+void AboutOscTesterApp::closeEvent(QCloseEvent *event){
+    windowStatus = false;
+}
+
+bool AboutOscTesterApp::windowStatus = false;
+
+bool AboutOscTesterApp::getWindowStatus(){
+    return windowStatus;
+}
+
+void AboutOscTesterApp::setWindowStatus(bool status){
+    windowStatus = status;
 }
 
 void AboutOscTesterApp::on_pushButton_clicked(){
