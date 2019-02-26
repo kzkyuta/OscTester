@@ -205,7 +205,6 @@ void QOSCSender::sendMessage(QOSCMessage *message)
 
     packet << osc::EndMessage;
     _socket->Send(packet.Data(), packet.Size());
-    qInfo() << "sent";
 }
 
 void QOSCSender::setRemoteHost(QString remoteHostS)
