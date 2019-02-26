@@ -57,7 +57,7 @@ private slots:
     void on_lineEdit_returnPressed();  // send Osc Message
 
 protected:
-    void keyPressEvent(QKeyEvent*);
+//    void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
 };
 

@@ -25,15 +25,14 @@ void SendContainer::on_sendButton_clicked(){
 
 void SendContainer::on_lineEdit_returnPressed(){
     this->sendOscMessage();
+    changeContainerColor(true);
 }
 
 void SendContainer::on_sendButton_pressed(){
-    this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
     changeContainerColor(true);
 }
 
 void SendContainer::on_sendButton_released(){
-    this->setStyleSheet("");
     changeContainerColor(false);
 }
 
@@ -88,16 +87,14 @@ QOSCMessage* SendContainer::outOscMessage(){
     return inputMessage.getMessage();
 }
 
-void SendContainer::keyPressEvent(QKeyEvent* event){
-    if(event->key() == Qt::Key_Return) {
-        this->setStyleSheet("#SendContainerFrame {background-color: darkgray;}");
-        changeContainerColor(true);
-    }
-}
+//void SendContainer::keyPressEvent(QKeyEvent* event){
+//    if(event->key() == Qt::Key_Return) {
+//        changeContainerColor(true);
+//    }
+//}
 
 void SendContainer::keyReleaseEvent(QKeyEvent* event){
     if(event->key() == Qt::Key_Return) {
-        this->setStyleSheet("");
         changeContainerColor(false);
     }
 }
@@ -144,5 +141,4 @@ void SendContainer::layoutInit(){
     layout1->addWidget(commandInput);
     layout1->addLayout(layout2);
     layout1->addWidget(sendButton);
-
 }
