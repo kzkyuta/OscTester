@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>resource/iconData.png</file>
-        <file>resource/TempData.json</file>
     </qresource>
 </RCC>
