@@ -4,6 +4,7 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
+#include "oscreceiver.h"
 
 #include <QMainWindow>
 #include <vector>
@@ -17,9 +18,12 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QMenuBar>
+#include <QPointer>
 #include "qoscbundle.h"
 #include "verticalscrollarea.h"
 #include "sendcontainer.h"
+#include "aboutosctesterapp.h"
 
 namespace Ui {
 class OscTester;
@@ -28,34 +32,57 @@ class OscTester;
 class OscTester : public QMainWindow
 {
     Q_OBJECT
-private:
-    Ui::OscTester *ui;
-    void closeEvent(QCloseEvent *event);
-public:
-    int nrows = 1;
-    int ncols = 5;
-    QString BundleIp;
-    QString Bundleport;
 
+public:
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
+
+    // for layouts
     QOSCReceiver *_oscReceiver;
     VerticalScrollArea *_scroll;
     QVector<SendContainer*> containers;
+
+    // for osc sending function.
+    QString BundleIp;
+    QString Bundleport;
+    QOSCSender *bundleSender;
+    QOSCBundle *bundleMessage;
     bool checkBundleSender(QVector<SendContainer*>, QVector<int>);
     bool setBundleMessage(QOSCBundle*, QVector<SendContainer*>, QVector<int>);
 
-    QOSCSender *bundleSender;
-    QOSCBundle *bundleMessage;
+private:
+    Ui::OscTester *ui;
+    void closeEvent(QCloseEvent *event);
+
+    // window management
+    QPointer<QAction> alwaysOnTop;
+    bool windowStatus;
+    void windowLayoutinit();
+    void menuInit();
 
 private slots:
+    // osc sender function
     void on_addContainer_clicked();
     void on_importJson_clicked();
     void on_exportJson_clicked();
 
+    // window management
+    void showSenderWindow();
+    void showReveiverWindow();
+    void showAboutApp();
+    void alwaysOnTopCheck();
+
 protected:
+    // for sending osc command.
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent*);
+
+    // argument for osc receiver and it's instance will be generate on this class.
+    OscReceiver w;
+    AboutOscTesterApp a;
+
+    // for on top of window function.
+    Qt::WindowFlags flags = nullptr;
 };
 
 #endif // OSCTESTER_H

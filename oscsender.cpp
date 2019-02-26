@@ -1,32 +1,42 @@
-#include "osctester.h"
-#include "ui_osctester.h"
+#include "oscsender.h"
+#include "ui_oscsender.h"
 
-OscTester::OscTester(QWidget *parent) :
+bool OscSender::windowStatus = false;
+
+OscSender::OscSender(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::OscTester)
+    ui(new Ui::OscSender)
 {
-    this->windowLayoutinit();
-    this->menuInit();
-
-    // show oscReceiver
-    w.show();
+    windowStatus = true;
+    _scroll = new VerticalScrollArea(3, 1, this);
+    ui->setupUi(this);
+    ui->verticalLayout->addWidget(_scroll);
 }
 
-OscTester::~OscTester()
+OscSender::~OscSender()
 {
     delete ui;
 }
 
-void OscTester::closeEvent(QCloseEvent *event){
+bool OscSender::getWindowSatus(){
+    return windowStatus;
+}
+
+void OscSender::setWindowSatus(bool status){
+    windowStatus = status;
+}
+
+void OscSender::closeEvent(QCloseEvent *event){
+    // TODO: the correct way to finish the program.
     windowStatus = false;
 }
 
-void OscTester::on_addContainer_clicked(){
+void OscSender::on_addContainer_clicked(){
     containers.append(new SendContainer(this));
     _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
 }
 
-void OscTester::on_importJson_clicked(){  // TODO: file checker
+void OscSender::on_importJson_clicked(){
     // Open file Dialog and get file name
     QString fileName = QFileDialog::getOpenFileName(
                 this,
@@ -60,7 +70,7 @@ void OscTester::on_importJson_clicked(){  // TODO: file checker
     }
 }
 
-void OscTester::on_exportJson_clicked(){
+void OscSender::on_exportJson_clicked(){
     // Generate File Save Dialog
     QString fileName = QFileDialog::getSaveFileName(this,
                         tr("Save Json"), "",
@@ -92,7 +102,7 @@ void OscTester::on_exportJson_clicked(){
     saveFile.close();
 }
 
-void OscTester::keyPressEvent(QKeyEvent* event){
+void OscSender::keyPressEvent(QKeyEvent* event){
     QVector<int> selectedContainers;
     for(int i = 0; i < SendContainer::containerNum; i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
@@ -121,7 +131,7 @@ void OscTester::keyPressEvent(QKeyEvent* event){
     }
 }
 
-void OscTester::keyReleaseEvent(QKeyEvent* event){
+void OscSender::keyReleaseEvent(QKeyEvent* event){
     for(int i = 0; i < SendContainer::containerNum; i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(false);
@@ -129,7 +139,7 @@ void OscTester::keyReleaseEvent(QKeyEvent* event){
     }
 }
 
-bool OscTester::checkBundleSender(QVector<SendContainer *> containers, QVector<int> selectedMsg){
+bool OscSender::checkBundleSender(QVector<SendContainer *> containers, QVector<int> selectedMsg){
     BundleIp = containers[selectedMsg[0]]->getIp();
     Bundleport = containers[selectedMsg[0]]->getPort();
 
@@ -149,7 +159,7 @@ bool OscTester::checkBundleSender(QVector<SendContainer *> containers, QVector<i
     }
 }
 
-bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContainer*> containers, QVector<int> selectedMsg){
+bool OscSender::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContainer*> containers, QVector<int> selectedMsg){
     foreach(int containerNum, selectedMsg){
         try {
             bundleMessage->addMessage(containers[containerNum]->outOscMessage());
@@ -161,63 +171,3 @@ bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContaine
     return true;
 }
 
-void OscTester::showSenderWindow(){
-    if(!windowStatus){
-//    if(!OscSender::getWindowSatus()){
-        this->show();
-    }
-}
-
-void OscTester::showReveiverWindow(){
-    if(!OscReceiver::getWindowStatus()){
-        w.show();
-    }
-}
-
-void OscTester::showAboutApp(){
-    if(!AboutOscTesterApp::getWindowStatus()){
-        a.show();
-    }
-}
-
-void OscTester::alwaysOnTopCheck(){
-    // change the window mode with Bitwise Operators
-    if(alwaysOnTop->isChecked()) flags |= Qt::WindowStaysOnTopHint;
-    else flags ^= Qt::WindowStaysOnTopHint;
-
-    // set settings
-    this->setWindowFlags(flags);
-    w.setWindowFlags(flags);
-    this->show();
-    w.show();
-}
-
-void OscTester::windowLayoutinit(){
-    _scroll = new VerticalScrollArea(3, 1, this);
-    ui->setupUi(this);
-    ui->verticalLayout_2->addWidget(_scroll);
-    windowStatus = true;
-}
-
-void OscTester::menuInit(){
-
-    QMenuBar *menuBar = new QMenuBar(0);
-    QMenu *fileMenu = menuBar->addMenu("&File");
-    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open);
-    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close);
-
-    fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
-//    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
-
-    QMenu *windowMenu = menuBar->addMenu("&Window");
-    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
-    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
-
-    alwaysOnTop = new QAction("Always on Top of Window", this);
-    alwaysOnTop->setCheckable(true);
-    alwaysOnTop->setChecked(false);
-    connect(alwaysOnTop, SIGNAL(triggered()), this, SLOT(alwaysOnTopCheck()));
-
-    QMenu *viewMenu = menuBar->addMenu("&View");
-    viewMenu->addAction(alwaysOnTop);
-}

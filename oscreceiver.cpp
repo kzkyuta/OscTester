@@ -4,20 +4,44 @@
 
 uint8_t ReceiverTabArea::tabNum = 0;
 
+bool OscReceiver::windowStatus = false;
+
 OscReceiver::OscReceiver(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OscReceiver)
 {
     ui->setupUi(this);
     ReceiverTabArea::tabNum = 0;
+    windowStatus = true;
 }
 
 OscReceiver::~OscReceiver()
 {
+    QApplication::quit();
+    exit(EXIT_SUCCESS);
     delete ui;
 }
 
+void OscReceiver::closeEvent(QCloseEvent *event){
+    windowStatus = false;
+}
+
+bool OscReceiver::getWindowStatus(){
+    return windowStatus;
+}
+void OscReceiver::setWindowStatus(bool status){
+    windowStatus = status;
+}
+
 void OscReceiver::on_pushButton_clicked(){
+    addreceiverTab();
+}
+
+void OscReceiver::on_lineEdit_returnPressed(){
+    addreceiverTab();
+}
+
+void OscReceiver::addreceiverTab(){
     QString portString = ui->lineEdit->text();
     bool isSuccess;
     unsigned int portNum = portString.toInt(&isSuccess, 10);
