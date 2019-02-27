@@ -5,8 +5,6 @@ SendContainer::SendContainer(QWidget *parent)
 {
     layoutInit();
 
-    containerNum ++;
-
     connect(sendButton, SIGNAL(clicked()), this, SLOT(on_sendButton_clicked()));
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
     connect(sendButton, SIGNAL(released()), this, SLOT(on_sendButton_released()));
@@ -15,9 +13,6 @@ SendContainer::SendContainer(QWidget *parent)
 }
 
 SendContainer::~SendContainer(){}
-
-// Number of Containers
-uint8_t SendContainer::containerNum = 0;
 
 void SendContainer::on_sendButton_clicked(){
     this->sendOscMessage();

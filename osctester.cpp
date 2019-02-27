@@ -26,7 +26,7 @@ void OscTester::closeEvent(QCloseEvent *event){
 
 void OscTester::on_addContainer_clicked(){
     containers.append(new SendContainer(this));
-    _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+    _scroll->addWidget(containers.back(), containers.size(), 1);
 }
 
 void OscTester::on_importJson_clicked(){  // TODO: file checker
@@ -71,12 +71,12 @@ void OscTester::jsonFileImport(QString fileName){
     // set all values on sendcontainer class.
     for(int i = 0; i < jsonArr.size(); i++){
         containers.append(new SendContainer(this));
-        _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+        _scroll->addWidget(containers.back(), containers.size(), 1);
         QJsonObject temp = jsonArr[i].toObject();
-        containers[SendContainer::containerNum - 1]->setComm(temp["command"].toString());
-        containers[SendContainer::containerNum - 1]->setMsg(temp["address"].toString());
-        containers[SendContainer::containerNum - 1]->setPort(temp["port"].toString());
-        containers[SendContainer::containerNum - 1]->setIp(temp["ip"].toString());
+        containers[containers.size() - 1]->setComm(temp["command"].toString());
+        containers[containers.size() - 1]->setMsg(temp["address"].toString());
+        containers[containers.size() - 1]->setPort(temp["port"].toString());
+        containers[containers.size() - 1]->setIp(temp["ip"].toString());
     }
 }
 
@@ -107,7 +107,7 @@ void OscTester::jsonFileExport(QString fileName){
 
 void OscTester::keyPressEvent(QKeyEvent* event){
     QVector<int> selectedContainers;
-    for(int i = 0; i < SendContainer::containerNum; i ++){
+    for(int i = 0; i < containers.size(); i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(true);
             selectedContainers.append(i);
@@ -126,7 +126,7 @@ void OscTester::keyPressEvent(QKeyEvent* event){
             delete bundleMessage;
             delete bundleSender;
         }else{
-            for(int i = 0; i < SendContainer::containerNum; i++){
+            for(int i = 0; i < containers.size(); i++){
                 containers[i]->changeContainerColor(false);
             }
             return;
@@ -135,7 +135,7 @@ void OscTester::keyPressEvent(QKeyEvent* event){
 }
 
 void OscTester::keyReleaseEvent(QKeyEvent* event){
-    for(int i = 0; i < SendContainer::containerNum; i ++){
+    for(int i = 0; i < containers.size(); i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(false);
         }
@@ -241,11 +241,11 @@ void OscTester::writeSettings(){
     settings.beginGroup("Sender");
     settings.setValue("geometry", this->saveGeometry());
     settings.setValue("state", this->saveState());
-    settings.setValue("containerNum", SendContainer::containerNum);
+    settings.setValue("containerNum", containers.size());
     settings.endGroup();
 
     // groupe for each container value
-    for(int i = 0; i < SendContainer::containerNum; i++){
+    for(int i = 0; i < containers.size(); i++){
         settings.beginGroup("container" + QString::number(i));
         settings.setValue("command", containers[i]->getComm());
         settings.setValue("message", containers[i]->getMsg());
