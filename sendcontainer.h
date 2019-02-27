@@ -40,8 +40,6 @@ public:
     void setPort(QString);
     void setIp(QString);
 
-    static uint8_t containerNum;
-
     // for sending osc message
     void sendOscMessage();
     QOSCMessage* outOscMessage();

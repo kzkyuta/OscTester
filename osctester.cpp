@@ -297,3 +297,10 @@ void OscTester::readSettings(){
         w.tabCotents[i]->setFilter(settings.value("Receiver/Filter" + QString::number(i)).toString());
     }
 }
+
+void OscTester::on_allClear_clicked(){
+    foreach(SendContainer* sendContainer, containers){
+        delete sendContainer;
+    }
+    containers.clear();
+}

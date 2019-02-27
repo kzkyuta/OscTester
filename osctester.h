@@ -81,6 +81,8 @@ private slots:
     void showAboutApp();
     void alwaysOnTopCheck();
 
+    void on_allClear_clicked();
+
 protected:
     // for sending osc command.
     void keyPressEvent(QKeyEvent*);

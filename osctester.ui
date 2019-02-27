@@ -68,6 +68,13 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="allClear">
+           <property name="text">
+            <string>All Clear</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="importJson">
            <property name="text">
             <string>Import</string>
