@@ -63,9 +63,9 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="clearSelectedTab">
+          <widget class="QPushButton" name="clearAll">
            <property name="text">
-            <string>Clear Selected Tab</string>
+            <string>Clear all</string>
            </property>
           </widget>
          </item>

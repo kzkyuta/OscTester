@@ -28,7 +28,9 @@ private slots:
     void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
 
-    void on_clearSelectedTab_clicked();
+//    void on_clearSelectedTab_clicked();
+
+    void on_clearAll_clicked();
 
 private:
     Ui::OscReceiver *ui;

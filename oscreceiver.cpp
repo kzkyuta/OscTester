@@ -11,6 +11,7 @@ OscReceiver::OscReceiver(QWidget *parent) :
     ui->setupUi(this);
     ReceiverTabArea::tabNum = 0;
     windowStatus = true;
+    ui->clearAll->setEnabled(false);
 }
 
 OscReceiver::~OscReceiver()
@@ -60,11 +61,22 @@ void OscReceiver::addreceiverTab(QString portString){
     }
     tabArea->addTab(tabCotents.back(), portString);
     tabArea->setCurrentIndex(tabArea->count()-1);
+    ui->clearAll->setEnabled(true);
 }
 
-void OscReceiver::on_clearSelectedTab_clicked(){
-    int currentTabIndex = tabArea->currentIndex();
-    delete tabCotents[currentTabIndex];
-    tabCotents.remove(currentTabIndex);
-    tabArea->removeTab(currentTabIndex);
+//void OscReceiver::on_clearSelectedTab_clicked(){
+//    int currentTabIndex = tabArea->currentIndex();
+//    delete tabCotents[currentTabIndex];
+//    tabCotents.remove(currentTabIndex);
+//    tabArea->removeTab(currentTabIndex);
+//}
+
+void OscReceiver::on_clearAll_clicked(){
+    int size = tabCotents.size();
+    for(int i = 0; i < size; i++){
+        delete tabCotents[i];
+    }
+    tabCotents.clear();
+    tabArea->clear();
+    ui->clearAll->setEnabled(false);
 }

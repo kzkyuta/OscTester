@@ -17,10 +17,8 @@ ReceiverTabArea::ReceiverTabArea(unsigned int portNum, QWidget* parent)
 
 ReceiverTabArea::~ReceiverTabArea(){
     oscReceiver->stop();
-    oscReceiver->disconnect(oscReceiver, SIGNAL(messageReceived(QOSCMessage*)), this, SLOT(onMessageReceived(QOSCMessage*)));
     QThread::msleep(10);
     delete oscReceiver;
-    qInfo() << "lele";
 }
 
 uint8_t ReceiverTabArea::tabNum = 0;
