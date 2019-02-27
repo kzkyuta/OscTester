@@ -292,11 +292,12 @@ void OscTester::readSettings(){
     w.restoreGeometry(settings.value("Receiver/geometry").toByteArray());
     w.restoreState(settings.value("Receiver/state").toByteArray());
 
+    // do not read tab data. this may occur error using same port.
     // read each data
-    for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
-        w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
-        w.tabCotents[i]->setFilter(settings.value("Receiver/Filter" + QString::number(i)).toString());
-    }
+//    for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
+//        w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
+//        w.tabCotents[i]->setFilter(settings.value("Receiver/Filter" + QString::number(i)).toString());
+//    }
 }
 
 void OscTester::on_allClear_clicked(){

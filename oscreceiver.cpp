@@ -56,6 +56,8 @@ void OscReceiver::addreceiverTab(QString portString){
     if(tabArea == nullptr){
         tabArea = new QTabWidget(this);
         ui->verticalLayout->addWidget(tabArea);
+//        tabArea->setTabPosition(QTabWidget::West);
     }
     tabArea->addTab(tabCotents.back(), portString);
+    tabArea->setCurrentIndex(tabArea->count()-1);
 }
