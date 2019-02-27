@@ -28,6 +28,8 @@ private slots:
     void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
 
+    void on_clearSelectedTab_clicked();
+
 private:
     Ui::OscReceiver *ui;
     void closeEvent(QCloseEvent *event);

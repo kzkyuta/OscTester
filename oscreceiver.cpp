@@ -61,3 +61,10 @@ void OscReceiver::addreceiverTab(QString portString){
     tabArea->addTab(tabCotents.back(), portString);
     tabArea->setCurrentIndex(tabArea->count()-1);
 }
+
+void OscReceiver::on_clearSelectedTab_clicked(){
+    int currentTabIndex = tabArea->currentIndex();
+    delete tabCotents[currentTabIndex];
+    tabCotents.remove(currentTabIndex);
+    tabArea->removeTab(currentTabIndex);
+}

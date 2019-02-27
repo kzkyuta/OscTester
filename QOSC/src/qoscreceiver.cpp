@@ -7,9 +7,14 @@ QOSCReceiver::QOSCReceiver(unsigned int localPortUI, QObject *parent):
     _socket( new UdpListeningReceiveSocket(IpEndpointName( IpEndpointName::ANY_ADDRESS, localPortUI ), this))
 {
 }
+
+QOSCReceiver::~QOSCReceiver(){
+    delete _socket;
+}
+
 void QOSCReceiver::stop()
 {
-//    _socket->AsynchronousBreak();
+    _socket->AsynchronousBreak();
 }
 
 void QOSCReceiver::run()
