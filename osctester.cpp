@@ -214,16 +214,17 @@ void OscTester::windowLayoutinit(){
 void OscTester::menuInit(){
 
     QMenuBar *menuBar = new QMenuBar(0);
-    QMenu *fileMenu = menuBar->addMenu("&File");
-    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open);
-    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close);
+    QMenu *fileMenu = menuBar->addMenu("&Sender");
+    fileMenu->addAction(tr("&Export Messages"), this, SLOT(on_exportJson_clicked()), QKeySequence(tr("Ctrl+e")));
+    fileMenu->addAction(tr("&Import Messages"), this, SLOT(on_importJson_clicked()), QKeySequence(tr("Ctrl+i")));
+    fileMenu->addAction(tr("&Show Sender"), this, SLOT(showSenderWindow()), QKeySequence(tr("Ctrl+s")));
 
     fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
 //    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
 
-    QMenu *windowMenu = menuBar->addMenu("&Window");
-    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
-    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
+    QMenu *windowMenu = menuBar->addMenu("&Receiver");
+    windowMenu->addAction(tr("&Show Receiver"), this, SLOT(showReveiverWindow()), QKeySequence(tr("Ctrl+r")));
+    windowMenu->addAction(tr("&Export Data"), this, SLOT(showReveiverWindow()), QKeySequence(tr("Ctrl+D")));
 
     alwaysOnTop = new QAction("Always on Top of Window", this);
     alwaysOnTop->setCheckable(true);
