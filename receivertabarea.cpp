@@ -31,6 +31,14 @@ void ReceiverTabArea::setPort(unsigned int portNum){
     port = portNum;
 }
 
+QString ReceiverTabArea::getFilter(){
+    return filterInput->text();
+}
+
+void ReceiverTabArea::setFilter(QString filter){
+    filterInput->setText(filter);
+}
+
 void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
     QDateTime time = QDateTime::currentDateTime();
     QString msgOut;

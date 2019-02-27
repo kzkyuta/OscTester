@@ -176,7 +176,6 @@ bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContaine
 
 void OscTester::showSenderWindow(){
     if(!windowStatus){
-//    if(!OscSender::getWindowSatus()){
         this->show();
     }
 }
@@ -262,6 +261,7 @@ void OscTester::writeSettings(){
     settings.setValue("containerNum", ReceiverTabArea::tabNum);
     for(int i = 0; i < ReceiverTabArea::tabNum; i++){
         settings.setValue("portNum" + QString::number(i), QString::number(w.tabCotents[i]->getPort()));
+        settings.setValue("Filter" + QString::number(i), w.tabCotents[i]->getFilter());
     }
     settings.endGroup();
 }
@@ -294,5 +294,6 @@ void OscTester::readSettings(){
     // read each data
     for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
         w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
+        w.tabCotents[i]->setFilter(settings.value("Receiver/Filter" + QString::number(i)).toString());
     }
 }

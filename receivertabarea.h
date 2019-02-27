@@ -30,6 +30,9 @@ public:
     unsigned int getPort();
     void setPort(unsigned int);
 
+    QString getFilter();
+    void setFilter(QString);
+
 public slots:
     void onMessageReceived(QOSCMessage* msg);
     void onChangedText();  // connect to the line edit which contains filter words.

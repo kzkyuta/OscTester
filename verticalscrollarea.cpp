@@ -30,10 +30,10 @@ int VerticalScrollArea::rowCount() const{
 }
 
 void VerticalScrollArea::adaptSize(){
-    if(rowCount() >= nRows ){
+    if(rowCount() > nRows ){
 //        int v = 1.0*(height() - childGrid->verticalSpacing()*(nRows+1.6))/nRows;
 //        int vCorrected = 100*rowCount() + childGrid->verticalSpacing()*(rowCount()+2);
-        int vCorrected = 90*rowCount();
+        int vCorrected = 90*(rowCount() - 1);
         contentWidget->setFixedHeight(vCorrected);
     }
     contentWidget->setFixedWidth(viewport()->width());
