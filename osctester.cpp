@@ -178,12 +178,18 @@ void OscTester::showSenderWindow(){
     if(!windowStatus){
         this->show();
     }
+    this->activateWindow();
+    makeWindowTop(0,true);
+    makeWindowTop(0,false);
 }
 
 void OscTester::showReveiverWindow(){
     if(!OscReceiver::getWindowStatus()){
         w.show();
+
     }
+    makeWindowTop(1,true);
+    makeWindowTop(1,false);
 }
 
 void OscTester::showAboutApp(){
@@ -193,15 +199,26 @@ void OscTester::showAboutApp(){
 }
 
 void OscTester::alwaysOnTopCheck(){
-    // change the window mode with Bitwise Operators
-    if(alwaysOnTop->isChecked()) flags |= Qt::WindowStaysOnTopHint;
+    this->makeWindowTop(0, alwaysOnTop->isChecked());
+    this->makeWindowTop(1, alwaysOnTop->isChecked());
+}
+
+void OscTester::makeWindowTop(uint8_t window, bool top){
+    if(top) flags |= Qt::WindowStaysOnTopHint;
     else flags ^= Qt::WindowStaysOnTopHint;
 
-    // set settings
-    this->setWindowFlags(flags);
-    w.setWindowFlags(flags);
-    this->show();
-    w.show();
+    switch(window){
+    case 0: // sender
+        this->setWindowFlags(flags);
+        this->show();
+        break;
+    case 1: // receiver
+        w.setWindowFlags(flags);
+        w.show();
+        break;
+    default:
+        break;
+    }
 }
 
 void OscTester::windowLayoutinit(){

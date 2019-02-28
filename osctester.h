@@ -68,6 +68,7 @@ private:
     // for initial setting
     void writeSettings();
     void readSettings();
+    void makeWindowTop(uint8_t, bool);
 
 private slots:
     // osc sender function
