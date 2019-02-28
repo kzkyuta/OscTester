@@ -99,7 +99,7 @@ void OscTester::jsonFileExport(QString fileName){
 
     // Write Data on file which user named
     QFile saveFile(fileName);
-    if(saveFile.open(QIODevice::WriteOnly | QIODevice::Append)){
+    if(saveFile.open(QIODevice::WriteOnly)){
         saveFile.write(data);
         saveFile.close();
     }
