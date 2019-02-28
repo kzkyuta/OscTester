@@ -46,7 +46,7 @@ void ReceiverTabArea::setFilter(QString filter){
 void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
     QDateTime time = QDateTime::currentDateTime();
     QString msgOut;
-    msgOut.append(time.toString("MM/dd/hh:mm:ss") + " - ");
+    msgOut.append(time.toString("MM/dd/hh:mm:ss:z") + " - ");
     msgOut.append(msg->getAddress() + ":");
 
     for(int i = 0; i < msg->getSize(); i++){
