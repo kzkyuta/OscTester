@@ -9,7 +9,9 @@ SendContainer::SendContainer(QWidget *parent)
     connect(sendButton, SIGNAL(pressed()), this, SLOT(on_sendButton_pressed()));
     connect(sendButton, SIGNAL(released()), this, SLOT(on_sendButton_released()));
     connect(commandInput, SIGNAL(textChanged(const QString &)), this, SLOT(on_changed_text()));
-    connect(msg, SIGNAL(returnPressed()), this, SLOT(on_lineEdit_returnPressed()));
+    connect(msg, SIGNAL(returnPressed()), this, SLOT(on_lineEditMsg_returnPressed()));
+    connect(port, SIGNAL(returnPressed()), this, SLOT(on_lineEditPort_returnPressed()));
+    connect(ip, SIGNAL(returnPressed()), this, SLOT(on_lineEditIp_returnPressed()));
 }
 
 SendContainer::~SendContainer(){}
@@ -18,7 +20,17 @@ void SendContainer::on_sendButton_clicked(){
     this->sendOscMessage();
 }
 
-void SendContainer::on_lineEdit_returnPressed(){
+void SendContainer::on_lineEditMsg_returnPressed(){
+    this->sendOscMessage();
+    changeContainerColor(true);
+}
+
+void SendContainer::on_lineEditPort_returnPressed(){
+    this->sendOscMessage();
+    changeContainerColor(true);
+}
+
+void SendContainer::on_lineEditIp_returnPressed(){
     this->sendOscMessage();
     changeContainerColor(true);
 }
@@ -136,6 +148,7 @@ void SendContainer::layoutInit(){
 
     ip = new QLineEdit(this);
     ip->setPlaceholderText("IP Adress");
+    ip->setText("127.0.0.1");
 
     layout3->addWidget(port);
     layout3->addWidget(ip);
