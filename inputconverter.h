@@ -8,7 +8,7 @@
 class InputConverter
 {
 public:
-    InputConverter(QString);
+    explicit InputConverter(QString);
     ~InputConverter();
     int getEleNum();
     void setMessage();

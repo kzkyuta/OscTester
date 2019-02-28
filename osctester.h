@@ -4,13 +4,27 @@
 #include "qoscsender.h"
 #include "qoscreceiver.h"
 #include "inputconverter.h"
-#include "ui_osctester.h"
+#include "oscreceiver.h"
 
 #include <QMainWindow>
 #include <vector>
 #include <QDebug>
 #include <QTime>
 #include <QCloseEvent>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QKeyEvent>
+#include <QMenuBar>
+#include <QPointer>
+#include <QSettings>
+#include "qoscbundle.h"
+#include "verticalscrollarea.h"
+#include "sendcontainer.h"
+#include "aboutosctesterapp.h"
 
 namespace Ui {
 class OscTester;
@@ -23,16 +37,64 @@ class OscTester : public QMainWindow
 public:
     explicit OscTester(QWidget *parent = nullptr);
     ~OscTester();
-    QOSCReceiver *_oscReceiver;
 
-private slots:
-    void on_sendMessage_clicked();
-    void onMessageReceived(QOSCMessage *msg);
+    // for layouts
+    QOSCReceiver *_oscReceiver;
+    VerticalScrollArea *_scroll;
+    QVector<SendContainer*> containers;
+
+    // for osc sending function.
+    QString BundleIp;
+    QString Bundleport;
+    QOSCSender *bundleSender;
+    QOSCBundle *bundleMessage;
+    bool checkBundleSender(QVector<SendContainer*>, QVector<int>);
+    bool setBundleMessage(QOSCBundle*, QVector<SendContainer*>, QVector<int>);
 
 private:
-    QOSCSender *_oscSender;
     Ui::OscTester *ui;
     void closeEvent(QCloseEvent *event);
+
+    // window management
+    QPointer<QAction> alwaysOnTop;
+    bool windowStatus;
+    void windowLayoutinit();
+    void menuInit();
+
+    // file management.
+    void jsonFileImport(QString);
+    void jsonFileExport(QString);
+
+    // for initial setting
+    void writeSettings();
+    void readSettings();
+    void makeWindowTop(uint8_t, bool);
+
+private slots:
+    // osc sender function
+    void on_addContainer_clicked();
+    void on_importJson_clicked();
+    void on_exportJson_clicked();
+
+    // window management
+    void showSenderWindow();
+    void showReveiverWindow();
+    void showAboutApp();
+    void alwaysOnTopCheck();
+
+    void on_allClear_clicked();
+
+protected:
+    // for sending osc command.
+    void keyPressEvent(QKeyEvent*);
+    void keyReleaseEvent(QKeyEvent*);
+
+    // argument for osc receiver and it's instance will be generate on this class.
+    OscReceiver w;
+    AboutOscTesterApp a;
+
+    // for on top of window function.
+    Qt::WindowFlags flags = nullptr;
 };
 
 #endif // OSCTESTER_H

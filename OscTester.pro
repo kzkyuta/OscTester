@@ -29,16 +29,42 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         osctester.cpp \
-    inputconverter.cpp
+    inputconverter.cpp \
+    verticalscrollarea.cpp \
+    sendcontainer.cpp \
+    oscreceiver.cpp \
+    receivertabarea.cpp \
+    aboutosctesterapp.cpp
 
 HEADERS += \
         osctester.h \
-    inputconverter.h
+    inputconverter.h \
+    verticalscrollarea.h \
+    sendcontainer.h \
+    oscreceiver.h \
+    receivertabarea.h \
+    aboutosctesterapp.h
 
 FORMS += \
-        osctester.ui
+    oscreceiver.ui \
+    osctester.ui \
+    aboutosctesterapp.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+macx: ICON = OscTesterIcons.icns
+
+DISTFILES +=
+
+RESOURCES += \
+    osctester.qrc
+
+VERSION = 0.0.1
+#QMAKE_FRAMEWORK_VERSION = 0.0.1
+#QMAKE_TARGET_COMPANY = TeamLab
+#QMAKE_TARGET_PRODUCT = Osc Tester
+#QMAKE_TARGET_DESCRIPTION = Osc Tester
+#QMAKE_TARGET_COPYRIGHT=(C) TeamLab

@@ -16,6 +16,9 @@ public:
     explicit QOSCSender(QString remoteHostS, unsigned int remotePortUI, QObject *parent = 0);
     void send(QOSCMessage *message);
     void send(QOSCBundle bundle);
+    osc::OutboundPacketStream makeBundlePacket(QOSCBundle bundle);
+    void sendBundle(QOSCBundle bundle);
+    void sendMessage(QOSCMessage *message);
 protected:
 private:
     UdpTransmitSocket *_socket;

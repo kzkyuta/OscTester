@@ -32,6 +32,7 @@ public:
     QOSCMessage* addTime(int value);
 
     osc::OutboundPacketStream* getPacket();
+    osc::OutboundPacketStream* getMessagePacket();
     QVector<QOSCArgument*> getArguments();
     int getSize();
     QString getAddress();
@@ -51,6 +52,7 @@ public:
     float getArgumentAsFloat(int index);
     QByteArray getArgumentAsBlob(int index);
     int getArgumentAsTime(int index);
+    QString getReceivedData(int index); // return all argument as String
 
 
 private:

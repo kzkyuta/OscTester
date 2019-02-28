@@ -18,6 +18,7 @@ class QOSCReceiver :
     Q_OBJECT
 public:
     explicit QOSCReceiver(unsigned int localPortUI, QObject *parent = 0);
+    ~QOSCReceiver();
     void stop();
 
 protected:

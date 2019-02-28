@@ -127,6 +127,34 @@ osc::OutboundPacketStream* QOSCMessage::getPacket()
     _packet << osc::EndBundle;
     return &_packet;
 }
+
+osc::OutboundPacketStream* QOSCMessage::getMessagePacket(){
+    _packet.Clear();
+    _packet << osc::BeginMessage(_address.toStdString().c_str());
+    foreach(QOSCArgument* argument, _arguments)
+    {
+
+        if(argument->_type == QOSCARGUMENT_INT)
+        {
+            _packet << static_cast<QOSCArgument_int*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_FLOAT)
+        {
+            _packet << (float) static_cast<QOSCArgument_float*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_BOOL)
+
+        {
+            _packet << static_cast<QOSCArgument_bool*>(argument)->_value;
+        }
+        else if(argument->_type == QOSCARGUMENT_STRING)
+        {
+            _packet << static_cast<QOSCArgument_string*>(argument)->_value.toStdString().c_str();
+        }
+    }
+    _packet << osc::EndMessage;
+    return &_packet;
+}
 QVector<QOSCArgument*> QOSCMessage::getArguments()
 {
     return _arguments;
@@ -209,3 +237,14 @@ int QOSCMessage::getArgumentAsTime(int index)
 
 }
 
+QString QOSCMessage::getReceivedData(int index){
+    if(isIntArgument(index)) return QString::number(((QOSCArgument_int*) _arguments[index])->_value);
+    if(isStringArgument(index)) return ((QOSCArgument_string*) _arguments[index])->_value;
+    if(isBoolArgument(index)){
+        if(((QOSCArgument_bool*) _arguments[index])->_value) return "True";
+        else return "false";
+    }
+    if(isFloatArgument(index)) return QString::number(((QOSCArgument_float*) _arguments[index])->_value);
+    if(isBlobArgument(index)) return "Blob Data";
+    if(isTimeArgument(index)) return QString::number(((QOSCArgument_time*) _arguments[index])->_value);
+}
