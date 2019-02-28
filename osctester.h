@@ -68,6 +68,7 @@ private:
     // for initial setting
     void writeSettings();
     void readSettings();
+    void makeWindowTop(uint8_t, bool);
 
 private slots:
     // osc sender function
@@ -80,6 +81,8 @@ private slots:
     void showReveiverWindow();
     void showAboutApp();
     void alwaysOnTopCheck();
+
+    void on_allClear_clicked();
 
 protected:
     // for sending osc command.

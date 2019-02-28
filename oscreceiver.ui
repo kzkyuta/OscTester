@@ -62,6 +62,13 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="clearAll">
+           <property name="text">
+            <string>Clear all</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>

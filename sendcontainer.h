@@ -40,8 +40,6 @@ public:
     void setPort(QString);
     void setIp(QString);
 
-    static uint8_t containerNum;
-
     // for sending osc message
     void sendOscMessage();
     QOSCMessage* outOscMessage();
@@ -56,7 +54,9 @@ private slots:
     void on_sendButton_pressed();
     void on_sendButton_released();
     void on_changed_text();
-    void on_lineEdit_returnPressed();  // send Osc Message
+    void on_lineEditMsg_returnPressed();  // send Osc Message
+    void on_lineEditPort_returnPressed();  // send Osc Message
+    void on_lineEditIp_returnPressed();  // send Osc Message
 
 protected:
 //    void keyPressEvent(QKeyEvent*);

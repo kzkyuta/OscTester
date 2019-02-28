@@ -9,6 +9,7 @@
 #include <QTime>
 #include <QDebug>
 #include <QPalette>
+#include <QPushButton>
 #include "qoscreceiver.h"
 
 class ReceiverTabArea : public QWidget
@@ -23,12 +24,16 @@ public:
     uint8_t getTabNum();
     QOSCReceiver *oscReceiver;
     QLineEdit *filterInput;
+    QPushButton *clearBtn;
     bool msgFilter(int);
     void showReceivedMsg();
     QVector<QString> receivedMsgs;
 
     unsigned int getPort();
     void setPort(unsigned int);
+
+    QString getFilter();
+    void setFilter(QString);
 
 public slots:
     void onMessageReceived(QOSCMessage* msg);
@@ -38,6 +43,8 @@ private:
     unsigned int port;
     QPlainTextEdit *receivedMsgOutput;
     QVBoxLayout *parentLayout;
+    QHBoxLayout *clearBtnLayout;
+    QWidget *spacer;
     void layoutInit();
 };
 

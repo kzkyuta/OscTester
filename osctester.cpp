@@ -26,7 +26,7 @@ void OscTester::closeEvent(QCloseEvent *event){
 
 void OscTester::on_addContainer_clicked(){
     containers.append(new SendContainer(this));
-    _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+    _scroll->addWidget(containers.back(), containers.size(), 1);
 }
 
 void OscTester::on_importJson_clicked(){  // TODO: file checker
@@ -71,12 +71,12 @@ void OscTester::jsonFileImport(QString fileName){
     // set all values on sendcontainer class.
     for(int i = 0; i < jsonArr.size(); i++){
         containers.append(new SendContainer(this));
-        _scroll->addWidget(containers.back(), SendContainer::containerNum, 1);
+        _scroll->addWidget(containers.back(), containers.size(), 1);
         QJsonObject temp = jsonArr[i].toObject();
-        containers[SendContainer::containerNum - 1]->setComm(temp["command"].toString());
-        containers[SendContainer::containerNum - 1]->setMsg(temp["address"].toString());
-        containers[SendContainer::containerNum - 1]->setPort(temp["port"].toString());
-        containers[SendContainer::containerNum - 1]->setIp(temp["ip"].toString());
+        containers[containers.size() - 1]->setComm(temp["command"].toString());
+        containers[containers.size() - 1]->setMsg(temp["address"].toString());
+        containers[containers.size() - 1]->setPort(temp["port"].toString());
+        containers[containers.size() - 1]->setIp(temp["ip"].toString());
     }
 }
 
@@ -99,7 +99,7 @@ void OscTester::jsonFileExport(QString fileName){
 
     // Write Data on file which user named
     QFile saveFile(fileName);
-    if(saveFile.open(QIODevice::WriteOnly | QIODevice::Append)){
+    if(saveFile.open(QIODevice::WriteOnly)){
         saveFile.write(data);
         saveFile.close();
     }
@@ -107,7 +107,7 @@ void OscTester::jsonFileExport(QString fileName){
 
 void OscTester::keyPressEvent(QKeyEvent* event){
     QVector<int> selectedContainers;
-    for(int i = 0; i < SendContainer::containerNum; i ++){
+    for(int i = 0; i < containers.size(); i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(true);
             selectedContainers.append(i);
@@ -126,7 +126,7 @@ void OscTester::keyPressEvent(QKeyEvent* event){
             delete bundleMessage;
             delete bundleSender;
         }else{
-            for(int i = 0; i < SendContainer::containerNum; i++){
+            for(int i = 0; i < containers.size(); i++){
                 containers[i]->changeContainerColor(false);
             }
             return;
@@ -135,7 +135,7 @@ void OscTester::keyPressEvent(QKeyEvent* event){
 }
 
 void OscTester::keyReleaseEvent(QKeyEvent* event){
-    for(int i = 0; i < SendContainer::containerNum; i ++){
+    for(int i = 0; i < containers.size(); i ++){
         if(event->key() == containers[i]->commandInput->text()[0].unicode()){
             containers[i]->changeContainerColor(false);
         }
@@ -176,15 +176,20 @@ bool OscTester::setBundleMessage(QOSCBundle* bundleMessage, QVector<SendContaine
 
 void OscTester::showSenderWindow(){
     if(!windowStatus){
-//    if(!OscSender::getWindowSatus()){
         this->show();
     }
+    this->activateWindow();
+    makeWindowTop(0,true);
+    makeWindowTop(0,false);
 }
 
 void OscTester::showReveiverWindow(){
     if(!OscReceiver::getWindowStatus()){
         w.show();
+
     }
+    makeWindowTop(1,true);
+    makeWindowTop(1,false);
 }
 
 void OscTester::showAboutApp(){
@@ -194,15 +199,26 @@ void OscTester::showAboutApp(){
 }
 
 void OscTester::alwaysOnTopCheck(){
-    // change the window mode with Bitwise Operators
-    if(alwaysOnTop->isChecked()) flags |= Qt::WindowStaysOnTopHint;
+    this->makeWindowTop(0, alwaysOnTop->isChecked());
+    this->makeWindowTop(1, alwaysOnTop->isChecked());
+}
+
+void OscTester::makeWindowTop(uint8_t window, bool top){
+    if(top) flags |= Qt::WindowStaysOnTopHint;
     else flags ^= Qt::WindowStaysOnTopHint;
 
-    // set settings
-    this->setWindowFlags(flags);
-    w.setWindowFlags(flags);
-    this->show();
-    w.show();
+    switch(window){
+    case 0: // sender
+        this->setWindowFlags(flags);
+        this->show();
+        break;
+    case 1: // receiver
+        w.setWindowFlags(flags);
+        w.show();
+        break;
+    default:
+        break;
+    }
 }
 
 void OscTester::windowLayoutinit(){
@@ -215,16 +231,17 @@ void OscTester::windowLayoutinit(){
 void OscTester::menuInit(){
 
     QMenuBar *menuBar = new QMenuBar(0);
-    QMenu *fileMenu = menuBar->addMenu("&File");
-    fileMenu->addAction(tr("&Save"), this, SLOT(), QKeySequence::Open);
-    fileMenu->addAction(tr("&Save as"), this, SLOT(), QKeySequence::Close);
+    QMenu *fileMenu = menuBar->addMenu("&Sender");
+    fileMenu->addAction(tr("&Export Messages"), this, SLOT(on_exportJson_clicked()), QKeySequence(tr("Ctrl+e")));
+    fileMenu->addAction(tr("&Import Messages"), this, SLOT(on_importJson_clicked()), QKeySequence(tr("Ctrl+i")));
+    fileMenu->addAction(tr("&Show Sender"), this, SLOT(showSenderWindow()), QKeySequence(tr("Ctrl+s")));
 
     fileMenu->addAction(tr("about.*"), this, SLOT(showAboutApp()));
 //    fileMenu->addAction(tr("preferences"), this, SLOT(optionPanelView()));
 
-    QMenu *windowMenu = menuBar->addMenu("&Window");
-    windowMenu->addAction(tr("&Sender"), this, SLOT(showSenderWindow()), QKeySequence::Save);
-    windowMenu->addAction(tr("&Receiver"), this, SLOT(showReveiverWindow()), QKeySequence::Refresh);
+    QMenu *windowMenu = menuBar->addMenu("&Receiver");
+    windowMenu->addAction(tr("&Show Receiver"), this, SLOT(showReveiverWindow()), QKeySequence(tr("Ctrl+r")));
+    windowMenu->addAction(tr("&Export Data"), this, SLOT(showReveiverWindow()), QKeySequence(tr("Ctrl+D")));
 
     alwaysOnTop = new QAction("Always on Top of Window", this);
     alwaysOnTop->setCheckable(true);
@@ -242,11 +259,11 @@ void OscTester::writeSettings(){
     settings.beginGroup("Sender");
     settings.setValue("geometry", this->saveGeometry());
     settings.setValue("state", this->saveState());
-    settings.setValue("containerNum", SendContainer::containerNum);
+    settings.setValue("containerNum", containers.size());
     settings.endGroup();
 
     // groupe for each container value
-    for(int i = 0; i < SendContainer::containerNum; i++){
+    for(int i = 0; i < containers.size(); i++){
         settings.beginGroup("container" + QString::number(i));
         settings.setValue("command", containers[i]->getComm());
         settings.setValue("message", containers[i]->getMsg());
@@ -262,6 +279,7 @@ void OscTester::writeSettings(){
     settings.setValue("containerNum", ReceiverTabArea::tabNum);
     for(int i = 0; i < ReceiverTabArea::tabNum; i++){
         settings.setValue("portNum" + QString::number(i), QString::number(w.tabCotents[i]->getPort()));
+        settings.setValue("Filter" + QString::number(i), w.tabCotents[i]->getFilter());
     }
     settings.endGroup();
 }
@@ -291,8 +309,17 @@ void OscTester::readSettings(){
     w.restoreGeometry(settings.value("Receiver/geometry").toByteArray());
     w.restoreState(settings.value("Receiver/state").toByteArray());
 
+    // do not read tab data. this may occur error using same port.
     // read each data
-    for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
-        w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
+//    for(int i = 0; i < settings.value("Receiver/containerNum").toInt(); i ++){
+//        w.addreceiverTab(settings.value("Receiver/portNum" + QString::number(i)).toString());
+//        w.tabCotents[i]->setFilter(settings.value("Receiver/Filter" + QString::number(i)).toString());
+//    }
+}
+
+void OscTester::on_allClear_clicked(){
+    foreach(SendContainer* sendContainer, containers){
+        delete sendContainer;
     }
+    containers.clear();
 }
