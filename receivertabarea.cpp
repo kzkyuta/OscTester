@@ -53,7 +53,10 @@ void ReceiverTabArea::onMessageReceived(QOSCMessage* msg){
         msgOut.append(" " + msg->getReceivedData(i));
     }
     receivedMsgs.push_back(msgOut);
-    this->showReceivedMsg();
+    receivedMsgOutput->appendHtml(receivedMsgs.back());
+    if(receivedMsgs.size() == 5000){
+        filterInput->setEnabled(false);
+    }
 }
 
 void ReceiverTabArea::onChangedText(){
@@ -84,6 +87,7 @@ void ReceiverTabArea::showReceivedMsg(){
 void ReceiverTabArea::layoutInit(){
     receivedMsgOutput->setReadOnly(true);
     filterInput->setPlaceholderText("Insert filter sentence.");
+    filterInput->setEnabled(true);
 
     parentLayout->addWidget(filterInput);
     parentLayout->addWidget(receivedMsgOutput);

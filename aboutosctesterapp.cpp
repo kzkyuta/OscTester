@@ -8,6 +8,9 @@ AboutOscTesterApp::AboutOscTesterApp(QWidget *parent) :
     ui->setupUi(this);
     QPixmap pix("://resource/iconData.png");
     ui->label_pic->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio));
+    ui->label_2->setText("Version : " + QString(APP_VERSION) + " \n"
+                         "Copyright : " + QString(APP_COPYRIGHT) + " \n");
+
 }
 
 AboutOscTesterApp::~AboutOscTesterApp()

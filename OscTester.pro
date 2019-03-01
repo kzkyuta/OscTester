@@ -55,16 +55,45 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-macx: ICON = OscTesterIcons.icns
+macx: ICON = oscTesterIcon.icns
 
 DISTFILES +=
 
 RESOURCES += \
     osctester.qrc
 
-VERSION = 0.0.1
-#QMAKE_FRAMEWORK_VERSION = 0.0.1
-#QMAKE_TARGET_COMPANY = TeamLab
-#QMAKE_TARGET_PRODUCT = Osc Tester
-#QMAKE_TARGET_DESCRIPTION = Osc Tester
-#QMAKE_TARGET_COPYRIGHT=(C) TeamLab
+GIT_VERSION = $$system(git --git-dir $$PWD/.git --work-tree $$PWD describe --always --tags)
+
+QMAKE_TARGET_PRODUCT = "Osc Tester"
+QMAKE_TARGET_COMPANY = "TeamLab"
+QMAKE_TARGET_COPYRIGHT = "Copyright (c) by TeamLab"
+
+DEFINES += APP_VERSION=\"\\\"$${GIT_VERSION}\\\"\" \
+#DEFINES += APP_VERSION=\"\\\"$${APP_VERSION}\\\"\" \
+           GIT_PRODUCT=\"\\\"$${QMAKE_TARGET_PRODUCT}\\\"\" \
+           APP_COMPANY=\"\\\"$${QMAKE_TARGET_COMPANY}\\\"\" \
+           APP_COPYRIGHT=\"\\\"$${QMAKE_TARGET_COPYRIGHT}\\\"\"
+
+#macx {
+#    INFO_PLIST_PATH = $$shell_quote($${OUT_PWD}/$${TARGET}.app/Contents/Info.plist)
+##    QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $${GIT_VERSION}\" $${INFO_PLIST_PATH}
+#    plistupdate.commands = /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $$VERSION\", \"Set :CFBundleVersionString $$VERSION\" $$QMAKE_INFO_PLIST
+#}
+
+macx{
+    QTPROJECTS = /Users/kozakiyuta/Qt/apps
+    PLISTLOC = $${QTPROJECTS}/plist
+    PROPKGLOC = $${QTPROJECTS}/pkgpath
+    PRORESLOC = $${QTPROJECTS}/resource
+
+    QMAKE_EXTRA_TARGETS += codesign product
+    codesign.commands += $${QTPATH}/bin/macdeployqt $${TARGET}.app -verbose=3;
+    codesign.commands += cp $${PLISTLOC}/Infoplist/Info.plist $${TARGET}.app/Contents/Info.plist;
+    product.commands += productbuild --component $${TARGET}.app /Applications --sign \"$${INSTALLERCERT}\" $${TARGET}.pkg;
+}
+
+
+#QMAKE_INFO_PLIST +=  $${TARGET}/data/default.plist
+#QMAKE_INFO_PLIST +=  $${TARGET}/Contents/info.plist
+#QMAKE_POST_LINK += sed -i -e "s/@VERSION@/$$VERSION/g" "./$${TARGET}.app/Contents/Info.plist";
+#QMAKE_POST_LINK += sed -i -e "s/@VERSION@/$$APP_VERSION/g" "./$${TARGET}.app/Contents/Info.plist";

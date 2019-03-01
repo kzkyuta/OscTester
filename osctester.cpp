@@ -12,6 +12,7 @@ OscTester::OscTester(QWidget *parent) :
     w.show();
 
     readSettings();
+    QString version(APP_VERSION);
 }
 
 OscTester::~OscTester()
